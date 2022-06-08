@@ -1,0 +1,14 @@
+name: bSoul
+version: '${project.version}'
+main: net.danh.bsoul.bSoul
+api-version: 1.13
+authors: [ VoChiDanh ]
+description: SoulPoints for RPG Server
+softdepend:
+  - PlaceholderAPI
+depend:
+  - ProtocolLib
+commands:
+  soul:
+    aliases:
+      - sp
