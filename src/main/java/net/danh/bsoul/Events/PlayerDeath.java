@@ -24,10 +24,21 @@ public class PlayerDeath implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
+        Player killer = p.getKiller();
         if (getconfigfile().getBoolean("DEATH.SKIP_DEATH_SCREEN")) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
         }
         Data.removeSoul(p, 1);
+        if (getconfigfile().getBoolean("PVP.ENABLE")) {
+            if (killer != null) {
+                int soul = getconfigfile().getInt("PVP.KILL_SOUL");
+                double chance = getconfigfile().getDouble("PVP.CHANCE");
+                double real_chance = Math.random() * 100.0D;
+                if (chance >= real_chance) {
+                    Data.addSoul(killer, soul);
+                }
+            }
+        }
         if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH")) {
             int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
             if (Data.getSoul(p) <= min) {

@@ -1,13 +1,22 @@
 SETTINGS:
   DEFAULT_SOUL: 5
   DEFAULT_SOUL_MAX: 10
+REHIBILITATE:
+  ENABLE: true
+  TIME: 300
+  SOUL: 2
 DEATH:
   SKIP_DEATH_SCREEN: true
   LOSE_ITEM_WHEN_DEATH: true
   MIN_SOUL_TO_LOSE: 3
+PVP:
+  ENABLE: true
+  KILL_SOUL: 1
+  CHANCE: 54.9
 MOBS:
   ENABLE: true #Kill mob to get soul
   ANIMAL: false #true -> Enable kill animal can get soul
   MONSTER: true
 HOOK:
   MYTHICMOBS: true #You need bSoulMMAddon for this!
+
