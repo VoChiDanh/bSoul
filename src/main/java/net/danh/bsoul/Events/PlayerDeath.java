@@ -59,7 +59,7 @@ public class PlayerDeath implements Listener {
                     if (Objects.requireNonNull(playerInventory.getItem(slot)).getItemMeta() != null) {
                         String item = Objects.requireNonNull(Objects.requireNonNull(playerInventory.getItem(slot)).getItemMeta()).getDisplayName();
                         int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
-                        sendPlayerMessage(p, getlanguagefile().getString(Chat.colorize("LOSE_ITEM").replaceAll("%item%", item).replaceAll("%amount%", String.valueOf(amount))));
+                        sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replaceAll("%item%", item).replaceAll("%amount%", String.valueOf(amount))));
                         playerInventory.setItem(slot, null);
                     }
                 }

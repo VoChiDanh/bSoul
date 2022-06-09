@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static net.danh.bsoul.Manager.Data.savePlayerData;
+import static net.danh.bsoul.Manager.Data.*;
 
 public final class bSoul extends JavaPlugin {
 
@@ -43,11 +43,17 @@ public final class bSoul extends JavaPlugin {
         Resources.createfiles();
         File.updateFile(this, Resources.getconfigfile(), "config.yml");
         File.updateFile(this, Resources.getlanguagefile(), "language.yml");
+        for (Player p : getServer().getOnlinePlayers()) {
+            Data.setSoul(p, Data.getSoulData(p));
+            Data.setSoulMax(p, Data.getMaxSoulData(p));
+        }
         (new BukkitRunnable() {
             public void run() {
                 for (Player p : getServer().getOnlinePlayers()) {
                     if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
-                        Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
+                        if (getSoul(p) < getSoulMax(p)) {
+                            Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
+                        }
                     }
                 }
             }

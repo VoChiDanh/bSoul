@@ -3,7 +3,6 @@ package net.danh.bsoul.CustomEvents;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class SoulChangeEvent extends Event {
@@ -17,16 +16,16 @@ public class SoulChangeEvent extends Event {
         p = player;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public int getCount() {
         return amount;
     }
 
     public Player getPlayer() {
         return p;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 
     @NotNull
