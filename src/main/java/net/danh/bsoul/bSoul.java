@@ -4,6 +4,7 @@ import net.danh.bsoul.Cmd.Soul;
 import net.danh.bsoul.Events.JoinQuit;
 import net.danh.bsoul.Events.MobDeath;
 import net.danh.bsoul.Events.PlayerDeath;
+import net.danh.bsoul.Events.SoulChange;
 import net.danh.bsoul.Hook.Placeholder;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Resources;
@@ -34,6 +35,7 @@ public final class bSoul extends JavaPlugin {
         }
         getServer().getPluginManager().registerEvents(new JoinQuit(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new SoulChange(), this);
         new Soul(this);
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholder().register();

@@ -44,9 +44,11 @@ public class PlayerDeath implements Listener {
             if (Data.getSoul(p) <= min) {
                 List<Integer> fullSlots = new ArrayList<>();
                 PlayerInventory playerInventory = p.getInventory();
-                for (int i = 1; i <= playerInventory.getSize(); i++) {
-                    if (playerInventory.getItem(i) != null) {
-                        fullSlots.add(i);
+                for (int i = 1; i < playerInventory.getSize(); i++) {
+                    if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                        if (playerInventory.getItem(i) != null) {
+                            fullSlots.add(i);
+                        }
                     }
                 }
                 if (fullSlots.size() == 0) {

@@ -13,6 +13,18 @@ PVP:
   ENABLE: true
   KILL_SOUL: 1
   CHANCE: 54.9
+ITEM:
+  SOUL:
+    ENABLE: true
+    MATERIAL: EMERALD
+    SLOT: 8
+    DATA: 0
+    NAME: "&9%soul% Soul"
+    UNBREAK: true
+    GLOW: true
+    HIDE_FLAG: true
+    LORE:
+      - "&7You have %soul% Soul"
 MOBS:
   ENABLE: true #Kill mob to get soul
   ANIMAL: false #true -> Enable kill animal can get soul

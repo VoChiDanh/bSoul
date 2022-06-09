@@ -7,6 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.Objects;
+
+import static net.danh.bsoul.Manager.Item.getSoulItems;
+
 public class JoinQuit implements Listener {
 
     @EventHandler
@@ -19,6 +23,7 @@ public class JoinQuit implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+        p.getInventory().remove(Objects.requireNonNull(getSoulItems(Data.getSoul(p))));
         Data.savePlayerData(p);
     }
 }
