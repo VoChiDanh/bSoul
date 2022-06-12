@@ -6,8 +6,6 @@ authors: [ VoChiDanh ]
 description: SoulPoints for RPG Server
 softdepend:
   - PlaceholderAPI
-depend:
-  - ProtocolLib
 commands:
   soul:
     aliases:
