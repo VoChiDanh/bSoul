@@ -41,5 +41,5 @@ jobs:
           embed-description: |
             ${{ github.event.head_commit.message }}
             
-            Download: [`Build #${{github.run_number}}`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/[DevBuild]-Storage.zip)
+            Download: [`Build #${{github.run_number}}`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/[DevBuild]-bSoul.zip)
             SpigotMC: [`102499`](https://www.spigotmc.org/resources/102499/)
