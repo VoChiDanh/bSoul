@@ -39,7 +39,7 @@ public class PlayerDeath implements Listener {
                 }
             }
         }
-        if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH")) {
+        if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && !getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
             int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
             if (Data.getSoul(p) <= min) {
                 List<Integer> fullSlots = new ArrayList<>();
@@ -63,6 +63,10 @@ public class PlayerDeath implements Listener {
                         playerInventory.setItem(slot, null);
                     }
                 }
+            }
+        } else if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
+            for (int i = 1; i <= 35; i++) {
+                p.getInventory().setItem(i, null);
             }
         }
     }
