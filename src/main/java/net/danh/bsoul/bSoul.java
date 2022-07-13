@@ -30,7 +30,7 @@ public final class bSoul extends JavaPlugin {
         instance = this;
         Metrics metrics = new Metrics(this, 12918);
         DCore.RegisterDCore(this);
-        if (getServer().getPluginManager().getPlugin("MythicMobs") == null) {
+        if (getServer().getPluginManager().getPlugin("bSoulMMAddon") == null) {
             getServer().getPluginManager().registerEvents(new MobDeath(), this);
         }
         getServer().getPluginManager().registerEvents(new JoinQuit(), this);
