@@ -25,7 +25,7 @@ public class Data {
     }
 
     public static void setSoul(Player p, Integer amount) {
-        if (!p.hasPlayedBefore()) {
+        if (getSoulData(p) == 0 && getMaxSoulData(p) == 0) {
             soul.put(p.getName() + "_SOUL", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
         } else {
             soul.put(p.getName() + "_SOUL", amount);
@@ -61,7 +61,11 @@ public class Data {
     }
 
     public static void setSoulMax(Player p, Integer amount) {
-        soul.put(p.getName() + "_SOUL_MAX", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX"), amount));
+        if (getSoulData(p) == 0 && getMaxSoulData(p) == 0) {
+            soul.put(p.getName() + "_SOUL_MAX", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX"), amount));
+        } else {
+            soul.put(p.getName() + "_SOUL_MAX", amount);
+        }
     }
 
     public static void addSoulMax(Player p, Integer amount) {
