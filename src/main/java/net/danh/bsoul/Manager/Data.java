@@ -25,7 +25,11 @@ public class Data {
     }
 
     public static void setSoul(Player p, Integer amount) {
-        soul.put(p.getName() + "_SOUL", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
+        if (!p.hasPlayedBefore()) {
+            soul.put(p.getName() + "_SOUL", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
+        } else {
+            soul.put(p.getName() + "_SOUL", amount);
+        }
         SoulChangeEvent soulChangeEvent = new SoulChangeEvent(p, Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
         Bukkit.getServer().getPluginManager().callEvent(soulChangeEvent);
     }
