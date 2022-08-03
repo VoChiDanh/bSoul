@@ -65,8 +65,13 @@ public class PlayerDeath implements Listener {
                 }
             }
         } else if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
-            for (int i = 1; i <= 35; i++) {
-                p.getInventory().setItem(i, null);
+            int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
+            if (Data.getSoul(p) <= min) {
+                for (int i = 1; i <= p.getInventory().getSize(); i++) {
+                    if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                        p.getInventory().setItem(i, null);
+                    }
+                }
             }
         }
     }
