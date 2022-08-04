@@ -1,6 +1,7 @@
 package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.bSoul;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,6 +25,6 @@ public class JoinQuit implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         p.getInventory().remove(Objects.requireNonNull(getSoulItems(Data.getSoul(p))));
-        Data.savePlayerData(p);
+        bSoul.db.save(p);
     }
 }

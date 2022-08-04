@@ -1,6 +1,8 @@
 package net.danh.bsoul;
 
 import net.danh.bsoul.Cmd.Soul;
+import net.danh.bsoul.Database.Database;
+import net.danh.bsoul.Database.SQLite;
 import net.danh.bsoul.Events.JoinQuit;
 import net.danh.bsoul.Events.MobDeath;
 import net.danh.bsoul.Events.PlayerDeath;
@@ -15,9 +17,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static net.danh.bsoul.Manager.Data.*;
+import static net.danh.bsoul.Manager.Data.getSoul;
+import static net.danh.bsoul.Manager.Data.getSoulMax;
 
 public final class bSoul extends JavaPlugin {
+
+    public static Database db;
 
     private static bSoul instance;
 
@@ -43,6 +48,8 @@ public final class bSoul extends JavaPlugin {
         Resources.createfiles();
         File.updateFile(this, Resources.getconfigfile(), "config.yml");
         File.updateFile(this, Resources.getlanguagefile(), "language.yml");
+        db = new SQLite(bSoul.getInstance());
+        db.load();
         for (Player p : getServer().getOnlinePlayers()) {
             Data.setSoul(p, Data.getSoulData(p));
             Data.setSoulMax(p, Data.getMaxSoulData(p));
@@ -63,7 +70,7 @@ public final class bSoul extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player p : getServer().getOnlinePlayers()) {
-            savePlayerData(p);
+            db.save(p);
         }
         Resources.saveconfig();
         Resources.savelanguage();

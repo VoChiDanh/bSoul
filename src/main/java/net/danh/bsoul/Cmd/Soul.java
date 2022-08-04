@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
-import static net.danh.dcore.Random.Number.isInteger;
+import static net.danh.dcore.Random.Number.getInt;
 import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
@@ -61,7 +61,7 @@ public class Soul extends CMDBase {
                         sendPlayerMessage(p, "&cPlayer is null");
                         return;
                     }
-                    if (isInteger(args[3])) {
+                    if (getInt(args[3]) > 0) {
                         Integer soul = Integer.parseInt(args[3]);
                         if (args[0].equalsIgnoreCase("add")) {
                             if (args[1].equalsIgnoreCase("soul")) {
@@ -131,7 +131,7 @@ public class Soul extends CMDBase {
                     sendConsoleMessage(c, "&cPlayer is null");
                     return;
                 }
-                if (isInteger(args[3])) {
+                if (getInt(args[3]) > 0) {
                     Integer soul = Integer.parseInt(args[3]);
                     if (args[0].equalsIgnoreCase("add")) {
                         if (args[1].equalsIgnoreCase("soul")) {

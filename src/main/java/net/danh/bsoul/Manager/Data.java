@@ -1,6 +1,7 @@
 package net.danh.bsoul.Manager;
 
 import net.danh.bsoul.CustomEvents.SoulChangeEvent;
+import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -10,14 +11,8 @@ public class Data {
 
     static HashMap<String, Integer> soul = new HashMap<>();
 
-    public static void savePlayerData(Player p) {
-        Resources.getdatafile().set("PLAYERS." + p.getName() + ".SOUL", getSoul(p));
-        Resources.getdatafile().set("PLAYERS." + p.getName() + ".MAX_SOUL", getSoulMax(p));
-        Resources.savedata();
-    }
-
     public static int getSoulData(Player p) {
-        return Resources.getdatafile().getInt("PLAYERS." + p.getName() + ".SOUL");
+        return Integer.parseInt(bSoul.db.getData("soul", p.getName()));
     }
 
     public static int getSoul(Player p) {
@@ -53,7 +48,7 @@ public class Data {
     }
 
     public static int getMaxSoulData(Player p) {
-        return Resources.getdatafile().getInt("PLAYERS." + p.getName() + ".MAX_SOUL");
+        return Integer.parseInt(bSoul.db.getData("max_soul", p.getName()));
     }
 
     public static int getSoulMax(Player p) {
