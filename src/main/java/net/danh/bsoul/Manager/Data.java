@@ -12,7 +12,7 @@ public class Data {
     static HashMap<String, Integer> soul = new HashMap<>();
 
     public static int getSoulData(Player p) {
-        return Integer.parseInt(bSoul.db.getData("soul", p.getName()));
+        return bSoul.db.getData("soul", p.getName());
     }
 
     public static int getSoul(Player p) {
@@ -48,7 +48,7 @@ public class Data {
     }
 
     public static int getMaxSoulData(Player p) {
-        return Integer.parseInt(bSoul.db.getData("max_soul", p.getName()));
+        return bSoul.db.getData("max_soul", p.getName());
     }
 
     public static int getSoulMax(Player p) {

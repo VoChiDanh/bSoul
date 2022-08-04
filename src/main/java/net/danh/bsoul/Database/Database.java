@@ -38,7 +38,7 @@ public abstract class Database {
 
     // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
     // This returns the number of people the player killed.
-    public String getData(String type, String player) {
+    public Integer getData(String type, String player) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs;
@@ -49,7 +49,7 @@ public abstract class Database {
             rs = ps.executeQuery();
             while (rs.next()) {
                 if (rs.getString("player").equalsIgnoreCase(player.toLowerCase())) {
-                    return rs.getString(type.toLowerCase());
+                    return rs.getInt(type.toLowerCase());
                 }
             }
         } catch (SQLException ex) {
