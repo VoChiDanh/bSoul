@@ -94,7 +94,7 @@ public abstract class Database {
             conn.setAutoCommit(false);
             ps.setInt(1, playerData.getdSoul());
             ps.setInt(2, playerData.getmSoul());
-            ps.setString(7, playerData.getName());
+            ps.setString(3, playerData.getName());
             ps.addBatch();
             ps.executeBatch();
             conn.commit();
