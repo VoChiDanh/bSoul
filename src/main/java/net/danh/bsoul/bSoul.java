@@ -2,6 +2,7 @@ package net.danh.bsoul;
 
 import net.danh.bsoul.Cmd.Soul;
 import net.danh.bsoul.Database.Database;
+import net.danh.bsoul.Database.PlayerData;
 import net.danh.bsoul.Database.SQLite;
 import net.danh.bsoul.Events.JoinQuit;
 import net.danh.bsoul.Events.MobDeath;
@@ -70,7 +71,7 @@ public final class bSoul extends JavaPlugin {
     @Override
     public void onDisable() {
         for (Player p : getServer().getOnlinePlayers()) {
-            db.save(p);
+            bSoul.db.updateTable(new PlayerData(p.getName(), Data.getSoul(p), Data.getSoulMax(p)));
         }
         Resources.saveconfig();
         Resources.savelanguage();

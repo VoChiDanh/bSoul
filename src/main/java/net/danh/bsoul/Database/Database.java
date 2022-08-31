@@ -1,8 +1,6 @@
 package net.danh.bsoul.Database;
 
-import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.bSoul;
-import org.bukkit.entity.Player;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,19 +36,16 @@ public abstract class Database {
 
     // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
     // This returns the number of people the player killed.
-    public Integer getData(String type, String player) {
+    public PlayerData getData(String player) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs;
         try {
             conn = getSQLConnection();
             ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '" + player + "';");
-
             rs = ps.executeQuery();
-            while (rs.next()) {
-                if (rs.getString("player").equalsIgnoreCase(player.toLowerCase())) {
-                    return rs.getInt(type.toLowerCase());
-                }
+            if (rs.next()) {
+                return new PlayerData(rs.getString("player"), rs.getInt("soul"), rs.getInt("max_soul"));
             }
         } catch (SQLException ex) {
             bSoul.getInstance().getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
@@ -65,23 +60,52 @@ public abstract class Database {
         return null;
     }
 
-    // Now we need methods to save things to the database
-    public void save(Player player) {
+    public void createTable(PlayerData playerData) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("REPLACE INTO " + table + " (player,soul,max_soul) VALUES(?,?,?)");
-            ps.setString(1, player.getName().toLowerCase());
-            ps.setInt(2, Data.getSoul(player));
-            ps.setInt(3, Data.getSoulMax(player));
+            ps = conn.prepareStatement("INSERT INTO " + table + " (player,soul,max_soul) VALUES(?,?,?)"); // IMPORTANT. In SQLite class, We made 3 colums. player, Kills, Total.
+            ps.setString(1, playerData.getName());
+            ps.setInt(2, playerData.getdSoul());
+            ps.setInt(3, playerData.getmSoul());
             ps.executeUpdate();
         } catch (SQLException ex) {
             bSoul.getInstance().getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
         } finally {
             try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException ex) {
+                bSoul.getInstance().getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
+            }
+        }
+    }
+
+    public void updateTable(PlayerData playerData) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getSQLConnection();
+            ps = conn.prepareStatement("UPDATE " + table + " SET soul = ?, max_soul = ? " +
+                    "WHERE player = ?");
+            conn.setAutoCommit(false);
+            ps.setInt(1, playerData.getdSoul());
+            ps.setInt(2, playerData.getmSoul());
+            ps.setString(7, playerData.getName());
+            ps.addBatch();
+            ps.executeBatch();
+            conn.commit();
+        } catch (SQLException ex) {
+            bSoul.getInstance().getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+                if (conn != null)
+                    conn.close();
             } catch (SQLException ex) {
                 bSoul.getInstance().getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
             }

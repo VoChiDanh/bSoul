@@ -1,18 +1,35 @@
 package net.danh.bsoul.Manager;
 
 import net.danh.bsoul.CustomEvents.SoulChangeEvent;
+import net.danh.bsoul.Database.PlayerData;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Data {
-
     static HashMap<String, Integer> soul = new HashMap<>();
 
+    public static PlayerData getPlayerDatabase(Player player) throws SQLException {
+
+        PlayerData playerStats = bSoul.db.getData(player.getName());
+
+        if (playerStats == null) {
+            playerStats = new PlayerData(player.getName(), 0, 1);
+            bSoul.db.createTable(playerStats);
+        }
+
+        return playerStats;
+    }
+
     public static int getSoulData(Player p) {
-        return bSoul.db.getData("soul", p.getName());
+        try {
+            return getPlayerDatabase(p).getdSoul();
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
     public static int getSoul(Player p) {
@@ -48,7 +65,11 @@ public class Data {
     }
 
     public static int getMaxSoulData(Player p) {
-        return bSoul.db.getData("max_soul", p.getName());
+        try {
+            return getPlayerDatabase(p).getmSoul();
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
     public static int getSoulMax(Player p) {
