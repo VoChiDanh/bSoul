@@ -23,12 +23,16 @@ import static net.danh.bsoul.Manager.Data.getSoulMax;
 
 public final class bSoul extends JavaPlugin {
 
+    private static final boolean SOUL_ITEM = Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
     public static Database db;
-
     private static bSoul instance;
 
     public static bSoul getInstance() {
         return instance;
+    }
+
+    public static boolean isSoulItem() {
+        return SOUL_ITEM;
     }
 
     @Override
