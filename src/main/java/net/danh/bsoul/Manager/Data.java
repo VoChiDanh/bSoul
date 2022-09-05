@@ -1,6 +1,6 @@
 package net.danh.bsoul.Manager;
 
-import net.danh.bsoul.CustomEvents.SoulChangeEvent;
+import net.danh.bsoul.CustomEvents.SoulItemChangeEvent;
 import net.danh.bsoul.Database.PlayerData;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
@@ -37,21 +37,23 @@ public class Data {
     }
 
     public static void setSoul(Player p, Integer amount) {
+        SoulItemChangeEvent soulItemChangeEvent;
         if (getSoulData(p) == 0 && getMaxSoulData(p) == 0) {
             soul.put(p.getName() + "_SOUL", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
+            soulItemChangeEvent = new SoulItemChangeEvent(p, Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
         } else {
             soul.put(p.getName() + "_SOUL", amount);
+            soulItemChangeEvent = new SoulItemChangeEvent(p, amount);
         }
-        SoulChangeEvent soulChangeEvent = new SoulChangeEvent(p, Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
-        Bukkit.getServer().getPluginManager().callEvent(soulChangeEvent);
+        Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
     }
 
     public static void addSoul(Player p, Integer amount) {
         int amounts = getSoul(p) + amount;
         if (amounts <= getSoulMax(p)) {
             soul.replace(p.getName() + "_SOUL", amounts);
-            SoulChangeEvent soulChangeEvent = new SoulChangeEvent(p, amounts);
-            Bukkit.getServer().getPluginManager().callEvent(soulChangeEvent);
+            SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, amounts);
+            Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
         }
     }
 
@@ -59,8 +61,8 @@ public class Data {
         int count = getSoul(p) - amount;
         if (count >= 0) {
             soul.replace(p.getName() + "_SOUL", count);
-            SoulChangeEvent soulChangeEvent = new SoulChangeEvent(p, count);
-            Bukkit.getServer().getPluginManager().callEvent(soulChangeEvent);
+            SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, count);
+            Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
         }
     }
 

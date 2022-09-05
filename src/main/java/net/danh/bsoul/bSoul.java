@@ -54,15 +54,13 @@ public final class bSoul extends JavaPlugin {
             Data.setSoul(p, Data.getSoulData(p));
             Data.setSoulMax(p, Data.getMaxSoulData(p));
         }
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Bukkit.getServer().getOnlinePlayers().forEach(p -> {
-                if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
-                    if (getSoul(p) < getSoulMax(p)) {
-                        Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
-                    }
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
+            if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
+                if (getSoul(p) < getSoulMax(p)) {
+                    Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
                 }
-            });
-        }, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L);
+            }
+        }), Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L);
     }
 
     @Override

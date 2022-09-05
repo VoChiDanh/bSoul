@@ -1,11 +1,8 @@
 package net.danh.bsoul.Manager;
 
-import net.danh.bsoul.CustomEvents.SoulChangeEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,10 +51,6 @@ public class Resources {
         language = YamlConfiguration.loadConfiguration(languageFile);
         config = YamlConfiguration.loadConfiguration(configFile);
         mob = YamlConfiguration.loadConfiguration(mobFile);
-        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            SoulChangeEvent soulChangeEvent = new SoulChangeEvent(p, Data.getSoul(p));
-            Bukkit.getServer().getPluginManager().callEvent(soulChangeEvent);
-        }
     }
 
     public static void saveconfig() {

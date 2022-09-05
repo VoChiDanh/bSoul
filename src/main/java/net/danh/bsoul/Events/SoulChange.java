@@ -1,9 +1,8 @@
 package net.danh.bsoul.Events;
 
-import net.danh.bsoul.CustomEvents.SoulChangeEvent;
+import net.danh.bsoul.CustomEvents.SoulItemChangeEvent;
 import net.danh.bsoul.Manager.Item;
 import net.danh.bsoul.Manager.Resources;
-import net.danh.bsoul.bSoul;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -67,12 +66,11 @@ public class SoulChange implements Listener {
     }
 
     @EventHandler
-    public void onSoulChange(SoulChangeEvent e) {
+    public void onSoulChange(SoulItemChangeEvent e) {
         Player p = e.getPlayer();
         Integer count = e.getCount();
         int slot = Resources.getconfigfile().getInt("ITEM.SOUL.SLOT");
-        boolean enable = Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
-        if (enable && Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+        if (!e.isCancelled()) {
             p.getInventory().setItem(slot, Item.getSoulItems(count));
         }
     }
