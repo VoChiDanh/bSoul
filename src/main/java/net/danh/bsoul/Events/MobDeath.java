@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.Objects;
+import java.util.Random;
 
 import static net.danh.bsoul.Manager.Debug.debug;
 import static net.danh.bsoul.Manager.Resources.*;
@@ -63,7 +64,7 @@ public class MobDeath implements Listener {
         debug("Chance = " + chance);
         int soul = getRandomInt(min, max);
         debug("Soul = " + soul);
-        double real_chance = Math.random() * 100.0D;
+        double real_chance = new Random().nextInt(100);
         debug("Real Chance = " + real_chance);
         if (chance >= real_chance) {
             Data.addSoul(player, soul);

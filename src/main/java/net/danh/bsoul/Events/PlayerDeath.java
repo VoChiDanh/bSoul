@@ -13,6 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static net.danh.bsoul.Manager.Resources.getconfigfile;
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
@@ -33,7 +34,7 @@ public class PlayerDeath implements Listener {
             if (killer != null) {
                 int soul = getconfigfile().getInt("PVP.KILL_SOUL");
                 double chance = getconfigfile().getDouble("PVP.CHANCE");
-                double real_chance = Math.random() * 100.0D;
+                double real_chance = new Random().nextInt(100);
                 if (chance >= real_chance) {
                     Data.addSoul(killer, soul);
                 }
