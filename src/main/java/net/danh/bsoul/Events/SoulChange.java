@@ -26,7 +26,7 @@ public class SoulChange implements Listener {
         Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
         boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
         if (e.getItemDrop().getItemStack().getType() == material && Objects.requireNonNull(e.getItemDrop().getItemStack().getItemMeta()).isUnbreakable() == unbreak && e.getItemDrop().getItemStack().getAmount() == 1) {
-            if (bSoul.isSoulItem()) {
+            if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                 e.setCancelled(true);
             }
         }
@@ -42,7 +42,7 @@ public class SoulChange implements Listener {
                     return;
                 }
                 if (e.getCurrentItem().getType() == material && Objects.requireNonNull(e.getCurrentItem().getItemMeta()).isUnbreakable() == unbreak && e.getCurrentItem().getAmount() == 1) {
-                    if (bSoul.isSoulItem()) {
+                    if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                         e.setCancelled(true);
                         e.setResult(Event.Result.DENY);
                     }
@@ -57,7 +57,7 @@ public class SoulChange implements Listener {
                     return;
                 }
                 if (item.getType() == material && item.getItemMeta().isUnbreakable() == unbreak && item.getAmount() == 1) {
-                    if (bSoul.isSoulItem()) {
+                    if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                         e.setCancelled(true);
                         e.setResult(Event.Result.DENY);
                     }
@@ -72,7 +72,7 @@ public class SoulChange implements Listener {
         Integer count = e.getCount();
         int slot = Resources.getconfigfile().getInt("ITEM.SOUL.SLOT");
         boolean enable = Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
-        if (enable && bSoul.isSoulItem()) {
+        if (enable && Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
             p.getInventory().setItem(slot, Item.getSoulItems(count));
         }
     }

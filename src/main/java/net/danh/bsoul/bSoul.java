@@ -14,25 +14,20 @@ import net.danh.bsoul.Manager.Resources;
 import net.danh.dcore.DCore;
 import net.danh.dcore.Utils.File;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import static net.danh.bsoul.Manager.Data.getSoul;
 import static net.danh.bsoul.Manager.Data.getSoulMax;
 
 public final class bSoul extends JavaPlugin {
 
-    private static final boolean SOUL_ITEM = Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
     public static Database db;
     private static bSoul instance;
 
     public static bSoul getInstance() {
         return instance;
-    }
-
-    public static boolean isSoulItem() {
-        return SOUL_ITEM;
     }
 
     @Override
@@ -59,17 +54,15 @@ public final class bSoul extends JavaPlugin {
             Data.setSoul(p, Data.getSoulData(p));
             Data.setSoulMax(p, Data.getMaxSoulData(p));
         }
-        (new BukkitRunnable() {
-            public void run() {
-                for (Player p : getServer().getOnlinePlayers()) {
-                    if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
-                        if (getSoul(p) < getSoulMax(p)) {
-                            Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
-                        }
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            Bukkit.getServer().getOnlinePlayers().forEach(p -> {
+                if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
+                    if (getSoul(p) < getSoulMax(p)) {
+                        Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
                     }
                 }
-            }
-        }).runTaskTimer(this, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L);
+            });
+        }, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L);
     }
 
     @Override
