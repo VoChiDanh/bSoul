@@ -40,21 +40,6 @@
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
                     </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>net/danh/dcore/Utils/Progress*</exclude>
-                                <exclude>net/danh/dcore/Utils/Progress*</exclude>
-                                <exclude>net/danh/dcore/Utils/Items*</exclude>
-                                <exclude>net/danh/dcore/List/Contain*</exclude>
-                                <exclude>net/danh/dcore/Events/EnchantItemEvent*</exclude>
-                                <exclude>net/danh/dcore/Enchant/Lore*</exclude>
-                                <exclude>net/danh/dcore/Indicator/Hologram*</exclude>
-                                <exclude>net/danh/dcore/Indicator/RemoveHolo*</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
                 </configuration>
                 <executions>
                     <execution>
