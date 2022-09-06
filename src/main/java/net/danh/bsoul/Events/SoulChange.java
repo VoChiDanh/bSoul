@@ -22,43 +22,47 @@ public class SoulChange implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClick(PlayerDropItemEvent e) {
-        Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
-        boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
-        if (e.getItemDrop().getItemStack().getType() == material && Objects.requireNonNull(e.getItemDrop().getItemStack().getItemMeta()).isUnbreakable() == unbreak && e.getItemDrop().getItemStack().getAmount() == 1) {
-            if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                e.setCancelled(true);
+        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+            Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
+            boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
+            if (e.getItemDrop().getItemStack().getType() == material && Objects.requireNonNull(e.getItemDrop().getItemStack().getItemMeta()).isUnbreakable() == unbreak && e.getItemDrop().getItemStack().getAmount() == 1) {
+                if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                    e.setCancelled(true);
+                }
             }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClick(InventoryClickEvent e) {
-        Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
-        boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
-        if (e.getWhoClicked() instanceof Player && e.getClickedInventory() != null) {
-            if (e.getSlot() == Resources.getconfigfile().getInt("ITEM.SOUL.SLOT")) {
-                if (e.getCurrentItem() == null && e.getCurrentItem().getItemMeta() == null) {
-                    return;
-                }
-                if (e.getCurrentItem().getType() == material && Objects.requireNonNull(e.getCurrentItem().getItemMeta()).isUnbreakable() == unbreak && e.getCurrentItem().getAmount() == 1) {
-                    if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                        e.setCancelled(true);
-                        e.setResult(Event.Result.DENY);
+        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+            Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
+            boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
+            if (e.getWhoClicked() instanceof Player && e.getClickedInventory() != null) {
+                if (e.getSlot() == Resources.getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                    if (e.getCurrentItem() == null && e.getCurrentItem().getItemMeta() == null) {
+                        return;
+                    }
+                    if (e.getCurrentItem().getType() == material && Objects.requireNonNull(e.getCurrentItem().getItemMeta()).isUnbreakable() == unbreak && e.getCurrentItem().getAmount() == 1) {
+                        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                            e.setCancelled(true);
+                            e.setResult(Event.Result.DENY);
+                        }
                     }
                 }
-            }
-            if (e.getClick() == ClickType.NUMBER_KEY) {
-                ItemStack item = (e.getClick() == org.bukkit.event.inventory.ClickType.NUMBER_KEY) ? e.getWhoClicked().getInventory().getItem(e.getHotbarButton()) : e.getCurrentItem();
-                if (item == null) {
-                    return;
-                }
-                if (item.getItemMeta() == null) {
-                    return;
-                }
-                if (item.getType() == material && item.getItemMeta().isUnbreakable() == unbreak && item.getAmount() == 1) {
-                    if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                        e.setCancelled(true);
-                        e.setResult(Event.Result.DENY);
+                if (e.getClick() == ClickType.NUMBER_KEY) {
+                    ItemStack item = (e.getClick() == org.bukkit.event.inventory.ClickType.NUMBER_KEY) ? e.getWhoClicked().getInventory().getItem(e.getHotbarButton()) : e.getCurrentItem();
+                    if (item == null) {
+                        return;
+                    }
+                    if (item.getItemMeta() == null) {
+                        return;
+                    }
+                    if (item.getType() == material && item.getItemMeta().isUnbreakable() == unbreak && item.getAmount() == 1) {
+                        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                            e.setCancelled(true);
+                            e.setResult(Event.Result.DENY);
+                        }
                     }
                 }
             }

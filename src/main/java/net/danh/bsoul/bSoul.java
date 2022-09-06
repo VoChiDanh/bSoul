@@ -40,12 +40,14 @@ public final class bSoul extends JavaPlugin {
         }
         getServer().getPluginManager().registerEvents(new JoinQuit(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
-        getServer().getPluginManager().registerEvents(new SoulChange(), this);
         new Soul(this);
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholder().register();
         }
         Resources.createfiles();
+        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+            getServer().getPluginManager().registerEvents(new SoulChange(), this);
+        }
         File.updateFile(this, Resources.getconfigfile(), "config.yml");
         File.updateFile(this, Resources.getlanguagefile(), "language.yml");
         db = new SQLite(bSoul.getInstance());
