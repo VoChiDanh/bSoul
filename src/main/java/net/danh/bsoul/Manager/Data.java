@@ -17,7 +17,7 @@ public class Data {
         PlayerData playerStats = bSoul.db.getData(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerData(player.getName(), 0, 1);
+            playerStats = new PlayerData(player.getName(), Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX"));
             bSoul.db.createTable(playerStats);
         }
 
