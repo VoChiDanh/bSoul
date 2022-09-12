@@ -62,7 +62,7 @@ public final class bSoul extends JavaPlugin {
                     Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
                 }
             }
-        }), Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getInt("REHIBILITATE.TIME") * 20L);
+        }), Resources.getconfigfile().getLong("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getLong("REHIBILITATE.TIME") * 20L);
     }
 
     @Override
