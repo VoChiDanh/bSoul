@@ -1,4 +1,9 @@
 SETTINGS:
+  BLACKLIST_SLOTS:
+    - 9
+    - 10
+    - 11
+    - 12
   DEFAULT_SOUL: 5
   DEFAULT_SOUL_MAX: 10
   DEBUG: false

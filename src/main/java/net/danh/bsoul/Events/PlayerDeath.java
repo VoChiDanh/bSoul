@@ -1,6 +1,7 @@
 package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.Manager.Resources;
 import net.danh.bsoul.bSoul;
 import net.danh.dcore.Utils.Chat;
 import org.bukkit.Bukkit;
@@ -26,6 +27,7 @@ public class PlayerDeath implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
+        List<Integer> bls = Resources.getconfigfile().getIntegerList("SETTINGS.BLACKLIST_SLOTS");
         if (getconfigfile().getBoolean("DEATH.SKIP_DEATH_SCREEN")) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
         }
@@ -46,9 +48,19 @@ public class PlayerDeath implements Listener {
                 List<Integer> fullSlots = new ArrayList<>();
                 PlayerInventory playerInventory = p.getInventory();
                 for (int i = 1; i < playerInventory.getSize(); i++) {
-                    if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
-                        if (playerInventory.getItem(i) != null) {
-                            fullSlots.add(i);
+                    if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
+                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                            if (playerInventory.getItem(i) != null) {
+                                if (!bls.contains(i)) {
+                                    fullSlots.add(i);
+                                }
+                            }
+                        }
+                    } else {
+                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                            if (playerInventory.getItem(i) != null) {
+                                fullSlots.add(i);
+                            }
                         }
                     }
                 }

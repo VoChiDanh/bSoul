@@ -10,6 +10,7 @@ import net.danh.bsoul.Events.PlayerDeath;
 import net.danh.bsoul.Events.SoulChange;
 import net.danh.bsoul.Hook.Placeholder;
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.Manager.Debug;
 import net.danh.bsoul.Manager.Resources;
 import net.danh.dcore.DCore;
 import net.danh.dcore.Utils.File;
@@ -56,6 +57,7 @@ public final class bSoul extends JavaPlugin {
             Data.setSoul(p, Data.getSoulData(p));
             Data.setSoulMax(p, Data.getMaxSoulData(p));
         }
+        Debug.update27();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
                 if (getSoul(p) < getSoulMax(p)) {
