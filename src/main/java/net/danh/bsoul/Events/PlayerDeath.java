@@ -43,6 +43,9 @@ public class PlayerDeath implements Listener {
                 double real_chance = new Random().nextInt(100);
                 if (chance >= real_chance) {
                     Data.addSoul(killer, soul);
+                    sendPlayerMessage(killer, Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_MESSAGE"))
+                            .replace("%player%", p.getName())
+                            .replace("%amount%", String.valueOf(soul_lose_amount)));
                 }
             }
         }
