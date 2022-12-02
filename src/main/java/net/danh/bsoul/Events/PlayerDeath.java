@@ -27,11 +27,15 @@ public class PlayerDeath implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
+        int soul_lose_amount = getconfigfile().getInt("DEATH.SOUL_LOST");
         List<Integer> bls = Resources.getconfigfile().getIntegerList("SETTINGS.BLACKLIST_SLOTS");
         if (getconfigfile().getBoolean("DEATH.SKIP_DEATH_SCREEN")) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
         }
-        Data.removeSoul(p, 1);
+        Data.removeSoul(p, soul_lose_amount);
+        sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE"))
+                .replace("%amount%", String.valueOf(soul_lose_amount))
+                .replace("%left%", String.valueOf(Data.getSoul(p))));
         if (getconfigfile().getBoolean("PVP.ENABLE")) {
             if (killer != null) {
                 int soul = getconfigfile().getInt("PVP.KILL_SOUL");
