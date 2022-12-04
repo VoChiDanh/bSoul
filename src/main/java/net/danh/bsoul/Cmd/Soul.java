@@ -29,10 +29,8 @@ public class Soul extends CMDBase {
     @Override
     public void playerexecute(Player p, String[] args) {
         if (args.length == 0) {
-            sendPlayerMessage(p, getlanguagefile().getStringList("HELP.PLAYER"));
-            if (p.hasPermission("soul.admin")) {
-                sendPlayerMessage(p, getlanguagefile().getStringList("HELP.ADMIN"));
-            }
+            sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("YOUR_SOUL"))
+                    .replace("%soul%", String.valueOf(Data.getSoul(p))));
         }
         if (p.hasPermission("soul.user")) {
             if (args.length == 2) {
@@ -49,6 +47,12 @@ public class Soul extends CMDBase {
         }
         if (p.hasPermission("soul.admin")) {
             if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("help")) {
+                    sendPlayerMessage(p, getlanguagefile().getStringList("HELP.PLAYER"));
+                    if (p.hasPermission("soul.admin")) {
+                        sendPlayerMessage(p, getlanguagefile().getStringList("HELP.ADMIN"));
+                    }
+                }
                 if (args[0].equalsIgnoreCase("reload")) {
                     Resources.reloadfiles();
                     sendPlayerMessage(p, "&aReloaded");
@@ -180,6 +184,7 @@ public class Soul extends CMDBase {
                 commands.add("remove");
                 commands.add("set");
                 commands.add("reload");
+                commands.add("help");
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             }
         } else {
