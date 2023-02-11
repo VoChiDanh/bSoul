@@ -33,9 +33,7 @@ public class PlayerDeath implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
         }
         Data.removeSoul(p, soul_lose_amount);
-        sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE"))
-                .replace("%amount%", String.valueOf(soul_lose_amount))
-                .replace("%left%", String.valueOf(Data.getSoul(p))));
+        sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE")).replace("%amount%", String.valueOf(soul_lose_amount)).replace("%left%", String.valueOf(Data.getSoul(p))));
         if (getconfigfile().getBoolean("PVP.ENABLE")) {
             if (killer != null) {
                 int soul = getconfigfile().getInt("PVP.KILL_SOUL");
@@ -43,9 +41,7 @@ public class PlayerDeath implements Listener {
                 double real_chance = new Random().nextInt(100);
                 if (chance >= real_chance) {
                     Data.addSoul(killer, soul);
-                    sendPlayerMessage(killer, Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_MESSAGE"))
-                            .replace("%player%", p.getName())
-                            .replace("%amount%", String.valueOf(soul_lose_amount)));
+                    sendPlayerMessage(killer, Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_MESSAGE")).replace("%player%", p.getName()).replace("%amount%", String.valueOf(soul_lose_amount)));
                 }
             }
         }
@@ -56,15 +52,27 @@ public class PlayerDeath implements Listener {
                 PlayerInventory playerInventory = p.getInventory();
                 for (int i = 1; i < playerInventory.getSize(); i++) {
                     if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
-                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
-                            if (playerInventory.getItem(i) != null) {
-                                if (!bls.contains(i)) {
-                                    fullSlots.add(i);
+                        if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                            if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                                if (playerInventory.getItem(i) != null) {
+                                    if (!bls.contains(i)) {
+                                        fullSlots.add(i);
+                                    }
                                 }
+                            }
+                        } else {
+                            if (playerInventory.getItem(i) != null) {
+                                fullSlots.add(i);
                             }
                         }
                     } else {
-                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                        if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                            if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                                if (playerInventory.getItem(i) != null) {
+                                    fullSlots.add(i);
+                                }
+                            }
+                        } else {
                             if (playerInventory.getItem(i) != null) {
                                 fullSlots.add(i);
                             }
@@ -88,7 +96,11 @@ public class PlayerDeath implements Listener {
             int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
             if (Data.getSoul(p) <= min) {
                 for (int i = 1; i <= p.getInventory().getSize(); i++) {
-                    if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                    if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                            p.getInventory().setItem(i, null);
+                        }
+                    } else {
                         p.getInventory().setItem(i, null);
                     }
                 }
