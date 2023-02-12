@@ -7,6 +7,7 @@ import net.danh.dcore.Utils.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.PlayerInventory;
@@ -23,7 +24,7 @@ import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class PlayerDeath implements Listener {
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
