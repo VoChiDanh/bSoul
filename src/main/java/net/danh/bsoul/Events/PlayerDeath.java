@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class PlayerDeath implements Listener {
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
@@ -41,8 +42,10 @@ public class PlayerDeath implements Listener {
                 double chance = getconfigfile().getDouble("PVP.CHANCE");
                 double real_chance = new Random().nextInt(100);
                 if (chance >= real_chance) {
-                    Data.addSoul(killer, soul);
-                    sendPlayerMessage(killer, Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_MESSAGE")).replace("%player%", p.getName()).replace("%amount%", String.valueOf(soul_lose_amount)));
+                    if (Data.getSoul(p) > 0) {
+                        Data.addSoul(killer, soul);
+                        sendPlayerMessage(killer, Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_MESSAGE")).replace("%player%", p.getName()).replace("%amount%", String.valueOf(soul_lose_amount)));
+                    }
                 }
             }
         }
@@ -84,13 +87,17 @@ public class PlayerDeath implements Listener {
                     return;
                 }
                 int slot = getRandomInt(1, fullSlots.size());
-                if (playerInventory.getItem(slot) != null) {
-                    if (Objects.requireNonNull(playerInventory.getItem(slot)).getItemMeta() != null) {
-                        String item = Objects.requireNonNull(Objects.requireNonNull(playerInventory.getItem(slot)).getItemMeta()).getDisplayName();
-                        int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
-                        sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replaceAll("%item%", item).replaceAll("%amount%", String.valueOf(amount))));
-                        playerInventory.setItem(slot, null);
+                ItemStack itemStack = playerInventory.getItem(slot);
+                if (itemStack != null) {
+                    String item;
+                    if (itemStack.getItemMeta() != null && itemStack.getItemMeta().hasDisplayName()) {
+                        item = itemStack.getItemMeta().getDisplayName();
+                    } else {
+                        item = itemStack.getType().name();
                     }
+                    int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
+                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replaceAll("%item%", item).replaceAll("%amount%", String.valueOf(amount))));
+                    playerInventory.setItem(slot, null);
                 }
             }
         } else if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
