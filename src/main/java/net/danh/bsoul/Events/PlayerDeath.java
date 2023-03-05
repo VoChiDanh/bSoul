@@ -37,7 +37,9 @@ public class PlayerDeath implements Listener {
         if (Data.getSoul(p) > 0) {
             Data.removeSoul(p, soul_lose_amount);
         } else {
-            p.sendMessage(Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_WITHOUT_SOUL"))));
+            if (killer != null) {
+                killer.sendMessage(Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_WITHOUT_SOUL"))));
+            }
         }
         sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE")).replace("%amount%", String.valueOf(soul_lose_amount)).replace("%left%", String.valueOf(Data.getSoul(p))));
         if (getconfigfile().getBoolean("PVP.ENABLE")) {
