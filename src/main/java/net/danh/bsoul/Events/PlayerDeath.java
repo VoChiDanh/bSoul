@@ -29,7 +29,7 @@ public class PlayerDeath implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
-        int soul_lose_amount = getconfigfile().getInt("DEATH.SOUL_LOST");
+        int soul_lose_amount = Math.max(1, getconfigfile().getInt("DEATH.SOUL_LOST"));
         List<Integer> bls = Resources.getconfigfile().getIntegerList("SETTINGS.BLACKLIST_SLOTS");
         if (getconfigfile().getBoolean("DEATH.SKIP_DEATH_SCREEN")) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
