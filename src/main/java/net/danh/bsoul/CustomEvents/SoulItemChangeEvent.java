@@ -17,7 +17,7 @@ public class SoulItemChangeEvent extends Event implements Cancellable {
     public SoulItemChangeEvent(Player player, Integer count) {
         amount = count;
         p = player;
-        cancel = Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
+        cancel = !Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
     }
 
     public static HandlerList getHandlerList() {

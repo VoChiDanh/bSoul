@@ -34,7 +34,7 @@ public final class bSoul extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        Metrics metrics = new Metrics(this, 12918);
+        new Metrics(this, 12918);
         DCore.RegisterDCore(this);
         if (getServer().getPluginManager().getPlugin("bSoulMMAddon") == null) {
             getServer().getPluginManager().registerEvents(new MobDeath(), this);
@@ -58,6 +58,8 @@ public final class bSoul extends JavaPlugin {
             Data.setSoulMax(p, Data.getMaxSoulData(p));
         }
         Debug.update27();
+        Debug.update29();
+        Debug.checkGitUpdate();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
                 if (getSoul(p) < getSoulMax(p)) {

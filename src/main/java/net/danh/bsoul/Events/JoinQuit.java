@@ -2,6 +2,7 @@ package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Database.PlayerData;
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.Manager.Resources;
 import net.danh.bsoul.bSoul;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,7 @@ public class JoinQuit implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         Data.setSoul(p, Data.getSoulData(p));
-        Data.setSoulMax(p, Data.getMaxSoulData(p));
+        Data.setSoulMax(p, Math.max(Data.getSoulData(p), Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX")));
     }
 
     @EventHandler

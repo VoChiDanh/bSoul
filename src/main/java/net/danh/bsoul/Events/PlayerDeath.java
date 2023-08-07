@@ -5,6 +5,8 @@ import net.danh.bsoul.Manager.Resources;
 import net.danh.bsoul.bSoul;
 import net.danh.dcore.Utils.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -89,7 +91,7 @@ public class PlayerDeath implements Listener {
                         }
                     }
                 }
-                if (fullSlots.size() == 0) {
+                if (fullSlots.isEmpty()) {
                     return;
                 }
                 int slot = getRandomInt(1, fullSlots.size());
@@ -103,6 +105,12 @@ public class PlayerDeath implements Listener {
                     }
                     int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
                     sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replaceAll("%item%", item).replaceAll("%amount%", String.valueOf(amount))));
+                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                        World world = p.getLocation().getWorld();
+                        if (world != null) {
+                            world.dropItem(p.getLocation(), itemStack);
+                        }
+                    }
                     playerInventory.setItem(slot, null);
                 }
             }
@@ -112,10 +120,29 @@ public class PlayerDeath implements Listener {
                 for (int i = 1; i <= p.getInventory().getSize(); i++) {
                     if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                         if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                            ItemStack itemStack = p.getInventory().getItem(i);
+                            if (itemStack != null && itemStack.getType() != Material.AIR) {
+                                if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                    World world = p.getLocation().getWorld();
+                                    if (world != null) {
+                                        world.dropItem(p.getLocation(), itemStack);
+                                    }
+                                }
+                            }
                             p.getInventory().setItem(i, null);
                         }
                     } else {
+                        ItemStack itemStack = p.getInventory().getItem(i);
+                        if (itemStack != null && itemStack.getType() != Material.AIR) {
+                            if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                World world = p.getLocation().getWorld();
+                                if (world != null) {
+                                    world.dropItem(p.getLocation(), itemStack);
+                                }
+                            }
+                        }
                         p.getInventory().setItem(i, null);
+
                     }
                 }
             }
