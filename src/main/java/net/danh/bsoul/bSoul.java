@@ -59,7 +59,6 @@ public final class bSoul extends JavaPlugin {
         }
         Debug.update27();
         Debug.update29();
-        Debug.checkGitUpdate();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
                 if (getSoul(p) < getSoulMax(p)) {

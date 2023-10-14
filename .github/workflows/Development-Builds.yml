@@ -41,5 +41,5 @@ jobs:
           embed-description: |
             ${{ github.event.head_commit.message }}
             
-            Download: [`Build #${{github.run_number}}`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/%5B%23${{github.run_number}}%5D-bSoul.zip)
-            SpigotMC: [`102499`](https://www.spigotmc.org/resources/102499/)
+             SpigotMC: [`102499`](https://www.spigotmc.org/resources/102499/)
+          filename: "./target/bSoul.jar"
