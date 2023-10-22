@@ -123,6 +123,45 @@ public class PlayerDeath implements Listener {
                     if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                         if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
                             ItemStack itemStack = p.getInventory().getItem(i);
+                            if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
+                                if (!bls.contains(i)) {
+                                    if (itemStack != null && itemStack.getType() != Material.AIR) {
+                                        if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                            World world = p.getLocation().getWorld();
+                                            if (world != null) {
+                                                world.dropItem(p.getLocation(), itemStack);
+                                            }
+                                        }
+                                        p.getInventory().setItem(i, null);
+                                    }
+                                }
+                            } else {
+                                if (itemStack != null && itemStack.getType() != Material.AIR) {
+                                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                        World world = p.getLocation().getWorld();
+                                        if (world != null) {
+                                            world.dropItem(p.getLocation(), itemStack);
+                                        }
+                                    }
+                                }
+                                p.getInventory().setItem(i, null);
+                            }
+                        }
+                    } else {
+                        ItemStack itemStack = p.getInventory().getItem(i);
+                        if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
+                            if (!bls.contains(i)) {
+                                if (itemStack != null && itemStack.getType() != Material.AIR) {
+                                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                        World world = p.getLocation().getWorld();
+                                        if (world != null) {
+                                            world.dropItem(p.getLocation(), itemStack);
+                                        }
+                                    }
+                                    p.getInventory().setItem(i, null);
+                                }
+                            }
+                        } else {
                             if (itemStack != null && itemStack.getType() != Material.AIR) {
                                 if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
                                     World world = p.getLocation().getWorld();
@@ -133,18 +172,6 @@ public class PlayerDeath implements Listener {
                             }
                             p.getInventory().setItem(i, null);
                         }
-                    } else {
-                        ItemStack itemStack = p.getInventory().getItem(i);
-                        if (itemStack != null && itemStack.getType() != Material.AIR) {
-                            if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
-                                World world = p.getLocation().getWorld();
-                                if (world != null) {
-                                    world.dropItem(p.getLocation(), itemStack);
-                                }
-                            }
-                        }
-                        p.getInventory().setItem(i, null);
-
                     }
                 }
             }
