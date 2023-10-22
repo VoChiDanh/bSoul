@@ -74,7 +74,9 @@ public class PlayerDeath implements Listener {
                             }
                         } else {
                             if (playerInventory.getItem(i) != null) {
-                                fullSlots.add(i);
+                                if (!bls.contains(i)) {
+                                    fullSlots.add(i);
+                                }
                             }
                         }
                     } else {
