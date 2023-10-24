@@ -15,14 +15,13 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.danh.bsoul.Manager.Resources.getconfigfile;
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
-import static net.danh.dcore.Random.Number.getRandomInt;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class PlayerDeath implements Listener {
@@ -60,7 +59,7 @@ public class PlayerDeath implements Listener {
         if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && !getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
             int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
             if (Data.getSoul(p) <= min) {
-                List<Integer> fullSlots = new ArrayList<>();
+                AtomicInteger atomicInteger = new AtomicInteger();
                 PlayerInventory playerInventory = p.getInventory();
                 for (int i = 1; i < playerInventory.getSize(); i++) {
                     if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
@@ -68,14 +67,16 @@ public class PlayerDeath implements Listener {
                             if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
                                 if (playerInventory.getItem(i) != null) {
                                     if (!bls.contains(i)) {
-                                        fullSlots.add(i);
+                                        atomicInteger.set(i);
+                                        break;
                                     }
                                 }
                             }
                         } else {
                             if (playerInventory.getItem(i) != null) {
                                 if (!bls.contains(i)) {
-                                    fullSlots.add(i);
+                                    atomicInteger.set(i);
+                                    break;
                                 }
                             }
                         }
@@ -83,20 +84,19 @@ public class PlayerDeath implements Listener {
                         if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                             if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
                                 if (playerInventory.getItem(i) != null) {
-                                    fullSlots.add(i);
+                                    atomicInteger.set(i);
+                                    break;
                                 }
                             }
                         } else {
                             if (playerInventory.getItem(i) != null) {
-                                fullSlots.add(i);
+                                atomicInteger.set(i);
+                                break;
                             }
                         }
                     }
                 }
-                if (fullSlots.isEmpty()) {
-                    return;
-                }
-                int slot = getRandomInt(1, fullSlots.size());
+                int slot = atomicInteger.get();
                 ItemStack itemStack = playerInventory.getItem(slot);
                 if (itemStack != null) {
                     String item;
@@ -143,8 +143,8 @@ public class PlayerDeath implements Listener {
                                             world.dropItem(p.getLocation(), itemStack);
                                         }
                                     }
+                                    p.getInventory().setItem(i, null);
                                 }
-                                p.getInventory().setItem(i, null);
                             }
                         }
                     } else {
@@ -169,8 +169,8 @@ public class PlayerDeath implements Listener {
                                         world.dropItem(p.getLocation(), itemStack);
                                     }
                                 }
+                                p.getInventory().setItem(i, null);
                             }
-                            p.getInventory().setItem(i, null);
                         }
                     }
                 }
