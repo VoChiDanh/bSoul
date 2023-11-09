@@ -40,7 +40,7 @@ public class SoulChange implements Listener {
             boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
             if (e.getWhoClicked() instanceof Player && e.getClickedInventory() != null) {
                 if (e.getSlot() == Resources.getconfigfile().getInt("ITEM.SOUL.SLOT")) {
-                    if (e.getCurrentItem() == null && e.getCurrentItem().getItemMeta() == null) {
+                    if (e.getCurrentItem() == null || e.getCurrentItem().getItemMeta() == null) {
                         return;
                     }
                     if (e.getCurrentItem().getType() == material && Objects.requireNonNull(e.getCurrentItem().getItemMeta()).isUnbreakable() == unbreak && e.getCurrentItem().getAmount() == 1) {
