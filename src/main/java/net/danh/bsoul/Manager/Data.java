@@ -49,11 +49,13 @@ public class Data {
     }
 
     public static void addSoul(Player p, Integer amount) {
-        int amounts = getSoul(p) + amount;
-        if (amounts <= getSoulMax(p)) {
-            soul.replace(p.getName() + "_SOUL", amounts);
-            SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, amounts);
-            Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
+        if (!Resources.getconfigfile().getStringList("SETTINGS.EARN_BLACKLIST_WORLD").contains(p.getWorld().getName())) {
+            int amounts = getSoul(p) + amount;
+            if (amounts <= getSoulMax(p)) {
+                soul.replace(p.getName() + "_SOUL", amounts);
+                SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, amounts);
+                Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
+            }
         }
     }
 

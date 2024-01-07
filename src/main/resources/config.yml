@@ -4,6 +4,8 @@ SETTINGS:
     - 10
     - 11
     - 12
+  EARN_BLACKLIST_WORLD:
+    - example_world
   DEFAULT_SOUL: 5
   DEFAULT_SOUL_MAX: 10
   DEBUG: false
