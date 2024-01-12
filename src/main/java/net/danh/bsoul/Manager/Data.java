@@ -48,15 +48,18 @@ public class Data {
         Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
     }
 
-    public static void addSoul(Player p, Integer amount) {
+    public static boolean addSoul(Player p, Integer amount) {
         if (!Resources.getconfigfile().getStringList("SETTINGS.EARN_BLACKLIST_WORLD").contains(p.getWorld().getName())) {
             int amounts = getSoul(p) + amount;
             if (amounts <= getSoulMax(p)) {
                 soul.replace(p.getName() + "_SOUL", amounts);
                 SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, amounts);
                 Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
+                return true;
             }
+            return false;
         }
+        return false;
     }
 
     public static void removeSoul(Player p, Integer amount) {

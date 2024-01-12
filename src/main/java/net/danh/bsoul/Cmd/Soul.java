@@ -69,8 +69,9 @@ public class Soul extends CMDBase {
                         Integer soul = Integer.parseInt(args[3]);
                         if (args[0].equalsIgnoreCase("add")) {
                             if (args[1].equalsIgnoreCase("soul")) {
-                                Data.addSoul(target, soul);
-                                sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("CHANGE_SOUL")).replaceAll("%change%", "&a+").replaceAll("%soul%", String.format("%,d", soul)).replaceAll("%player%", target.getName()));
+                                if (Data.addSoul(target, soul)) {
+                                    sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("CHANGE_SOUL")).replaceAll("%change%", "&a+").replaceAll("%soul%", String.format("%,d", soul)).replaceAll("%player%", target.getName()));
+                                }
                             }
                             if (args[1].equalsIgnoreCase("max")) {
                                 Data.addSoulMax(target, soul);
@@ -139,8 +140,9 @@ public class Soul extends CMDBase {
                     Integer soul = Integer.parseInt(args[3]);
                     if (args[0].equalsIgnoreCase("add")) {
                         if (args[1].equalsIgnoreCase("soul")) {
-                            Data.addSoul(target, soul);
-                            sendConsoleMessage(c, Objects.requireNonNull(getlanguagefile().getString("CHANGE_SOUL")).replaceAll("%change%", "&a+").replaceAll("%soul%", String.format("%,d", soul)).replaceAll("%player%", target.getName()));
+                            if (Data.addSoul(target, soul)) {
+                                sendConsoleMessage(c, Objects.requireNonNull(getlanguagefile().getString("CHANGE_SOUL")).replaceAll("%change%", "&a+").replaceAll("%soul%", String.format("%,d", soul)).replaceAll("%player%", target.getName()));
+                            }
                         }
                         if (args[1].equalsIgnoreCase("max")) {
                             Data.addSoulMax(target, soul);
