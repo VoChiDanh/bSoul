@@ -6,7 +6,7 @@
 	
 	<groupId>net.danh</groupId>
 	<artifactId>bSoul</artifactId>
-	<version>2.9.5</version>
+	<version>2.9.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
 	<name>bSoul</name>
@@ -111,12 +111,6 @@
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>
 			<version>3.0.2</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.D-x-Z</groupId>
-			<artifactId>DCore</artifactId>
-			<version>9aa329d44e</version>
 			<scope>compile</scope>
 		</dependency><!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>

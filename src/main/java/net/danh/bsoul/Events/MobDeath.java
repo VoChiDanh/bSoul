@@ -13,9 +13,9 @@ import java.util.Objects;
 import java.util.Random;
 
 import static net.danh.bsoul.Manager.Debug.debug;
+import static net.danh.bsoul.Manager.Player.sendPlayerMessage;
 import static net.danh.bsoul.Manager.Resources.*;
-import static net.danh.dcore.Random.Number.getRandomInt;
-import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.bsoul.Random.Number.getRandomInt;
 
 public class MobDeath implements Listener {
 

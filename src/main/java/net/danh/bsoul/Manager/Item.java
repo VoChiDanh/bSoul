@@ -1,8 +1,6 @@
 package net.danh.bsoul.Manager;
 
-import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.dcore.Utils.Chat;
-import net.danh.dcore.Utils.Items;
+import net.danh.bsoul.NMS.NMSAssistant;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -11,8 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static net.danh.bsoul.Manager.Items.makeItem;
 import static net.danh.bsoul.Manager.Resources.getconfigfile;
-import static net.danh.dcore.Utils.Items.makeItem;
 
 public class Item {
 

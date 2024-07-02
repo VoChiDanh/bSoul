@@ -12,8 +12,6 @@ import net.danh.bsoul.Hook.Placeholder;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Debug;
 import net.danh.bsoul.Manager.Resources;
-import net.danh.dcore.DCore;
-import net.danh.dcore.Utils.File;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -35,7 +33,6 @@ public final class bSoul extends JavaPlugin {
     public void onEnable() {
         instance = this;
         new Metrics(this, 12918);
-        DCore.RegisterDCore(this);
         if (getServer().getPluginManager().getPlugin("bSoulMMAddon") == null) {
             getServer().getPluginManager().registerEvents(new MobDeath(), this);
         }
@@ -49,8 +46,6 @@ public final class bSoul extends JavaPlugin {
         if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
             getServer().getPluginManager().registerEvents(new SoulChange(), this);
         }
-        File.updateFile(this, Resources.getconfigfile(), "config.yml");
-        File.updateFile(this, Resources.getlanguagefile(), "language.yml");
         db = new SQLite(bSoul.getInstance());
         db.load();
         for (Player p : getServer().getOnlinePlayers()) {

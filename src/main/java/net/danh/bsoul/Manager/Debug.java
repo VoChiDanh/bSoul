@@ -1,7 +1,6 @@
 package net.danh.bsoul.Manager;
 
 import net.danh.bsoul.bSoul;
-import net.danh.dcore.DCore;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +34,7 @@ public class Debug {
 
     public static void debug(String message) {
         if (Resources.getconfigfile().getBoolean("SETTINGS.DEBUG")) {
-            DCore.dCoreLog(message);
+            bSoul.getInstance().getLogger().warning(message);
         }
     }
 }

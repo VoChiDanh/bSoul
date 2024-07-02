@@ -1,8 +1,8 @@
 package net.danh.bsoul.Cmd;
 
+import net.danh.bsoul.Commands.CMDBase;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Resources;
-import net.danh.dcore.Commands.CMDBase;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -15,10 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static net.danh.bsoul.Manager.Player.sendConsoleMessage;
+import static net.danh.bsoul.Manager.Player.sendPlayerMessage;
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
-import static net.danh.dcore.Random.Number.getInt;
-import static net.danh.dcore.Utils.Player.sendConsoleMessage;
-import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.bsoul.Random.Number.getInt;
 
 public class Soul extends CMDBase {
 

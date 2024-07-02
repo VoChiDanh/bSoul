@@ -1,9 +1,9 @@
 package net.danh.bsoul.Events;
 
+import net.danh.bsoul.Manager.Chat;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Resources;
 import net.danh.bsoul.bSoul;
-import net.danh.dcore.Utils.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,9 +20,9 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static net.danh.bsoul.Manager.Player.sendPlayerMessage;
 import static net.danh.bsoul.Manager.Resources.getconfigfile;
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
-import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 
 public class PlayerDeath implements Listener {
 
