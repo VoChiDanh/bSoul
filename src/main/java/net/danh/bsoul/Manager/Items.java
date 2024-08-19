@@ -1,6 +1,9 @@
 package net.danh.bsoul.Manager;
 
+import com.cryptomorin.xseries.XEnchantment;
+import net.danh.bsoul.NMS.NMSAssistant;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -48,11 +51,15 @@ public class Items {
                 itemMeta.setLore(Lore(lore));
             }
             if (glow) {
-                itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                XEnchantment.matchXEnchantment("DURABILITY").ifPresent(xEnchantment -> {
+                            if (xEnchantment.isSupported() && xEnchantment.getEnchant() != null)
+                                itemMeta.addEnchant(xEnchantment.getEnchant(), 1, true);
+                        }
+                );
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
             if (HideFlag) {
-                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
+                itemMeta.addItemFlags(ItemFlag.values());
             }
             if (Unbreakable) {
                 itemMeta.setUnbreakable(true);
@@ -66,11 +73,15 @@ public class Items {
                 itemMeta.setLore(Lore(lore));
             }
             if (glow) {
-                itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                XEnchantment.matchXEnchantment("DURABILITY").ifPresent(xEnchantment -> {
+                            if (xEnchantment.isSupported() && xEnchantment.getEnchant() != null)
+                                itemMeta.addEnchant(xEnchantment.getEnchant(), 1, true);
+                        }
+                );
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
             if (HideFlag) {
-                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
+                itemMeta.addItemFlags(ItemFlag.values());
             }
             if (Unbreakable) {
                 itemMeta.setUnbreakable(true);
@@ -105,11 +116,15 @@ public class Items {
                 itemMeta.setLore(Lore(l));
             }
             if (glow) {
-                itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                XEnchantment.matchXEnchantment("DURABILITY").ifPresent(xEnchantment -> {
+                            if (xEnchantment.isSupported() && xEnchantment.getEnchant() != null)
+                                itemMeta.addEnchant(xEnchantment.getEnchant(), 1, true);
+                        }
+                );
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
             if (HideFlag) {
-                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
+                itemMeta.addItemFlags(ItemFlag.values());
             }
             if (Unbreakable) {
                 itemMeta.setUnbreakable(true);
@@ -127,11 +142,15 @@ public class Items {
                 itemMeta.setLore(l);
             }
             if (glow) {
-                itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                XEnchantment.matchXEnchantment("DURABILITY").ifPresent(xEnchantment -> {
+                            if (xEnchantment.isSupported() && xEnchantment.getEnchant() != null)
+                                itemMeta.addEnchant(xEnchantment.getEnchant(), 1, true);
+                        }
+                );
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
             if (HideFlag) {
-                itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
+                itemMeta.addItemFlags(ItemFlag.values());
             }
             if (Unbreakable) {
                 itemMeta.setUnbreakable(true);
