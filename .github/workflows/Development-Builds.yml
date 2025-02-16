@@ -6,16 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up JDK 8
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           java-version: '8'
           distribution: 'adopt'
           cache: maven
       - name: Build with Maven
         run: mvn -B package
-      - uses: "actions/upload-artifact@v3"
+      - uses: "actions/upload-artifact@v4"
         with:
           name: "[#${{github.run_number}}]-bSoul"
           path: |
@@ -26,7 +26,7 @@ jobs:
           msg: ${{github.repository}}
           separator: "/"
       - name: Build passsed
-        uses: tsickert/discord-webhook@v4.0.0
+        uses: tsickert/discord-webhook@v6.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           username: "${{ steps.split.outputs._0 }}"
