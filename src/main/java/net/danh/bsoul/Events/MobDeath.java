@@ -68,7 +68,8 @@ public class MobDeath implements Listener {
         debug("Real Chance = " + real_chance);
         if (chance >= real_chance) {
             if (Data.addSoul(player, soul)) {
-                sendPlayerMessage(player, Objects.requireNonNull(getlanguagefile().getString("KILL_MOB")).replace("%soul%", String.format("%,d", soul)).replace("%mob%", mob.getName()));
+                if (getlanguagefile().getString("KILL_MOB") != null)
+                    sendPlayerMessage(player, Objects.requireNonNull(getlanguagefile().getString("KILL_MOB")).replace("%soul%", String.format("%,d", soul)).replace("%mob%", mob.getName()));
             }
         }
     }
