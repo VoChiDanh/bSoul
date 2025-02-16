@@ -20,7 +20,7 @@ public class Item {
         Boolean glow = getconfigfile().getBoolean("ITEM.SOUL.GLOW");
         Boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
         Boolean hide_flag = getconfigfile().getBoolean("ITEM.SOUL.HIDE_FLAG");
-        List<String> lore = Items.Lore(getconfigfile().getStringList("ITEM.SOUL.LORE").stream().map(a -> a.replaceAll("%soul%", String.format("%,d", amount))).collect(Collectors.toList()));
+        List<String> lore = Items.Lore(getconfigfile().getStringList("ITEM.SOUL.LORE").stream().map(a -> a.replace("%soul%", String.format("%,d", amount))).collect(Collectors.toList()));
         String name = Objects.requireNonNull(Chat.colorize(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.NAME"))).replace("%soul%", String.format("%,d", amount)));
         NMSAssistant nms = new NMSAssistant();
         if (material != null) {

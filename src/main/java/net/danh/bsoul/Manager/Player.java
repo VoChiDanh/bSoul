@@ -16,8 +16,10 @@ public class Player {
      * @param msg Message... send to player
      */
     public static void sendPlayerMessage(org.bukkit.entity.Player p, String... msg) {
-        for (String string : msg) {
-            p.sendMessage(Chat.colorize(string));
+        if (msg != null) {
+            for (String string : msg) {
+                p.sendMessage(Chat.colorize(string));
+            }
         }
     }
 
