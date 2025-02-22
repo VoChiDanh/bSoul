@@ -2,6 +2,7 @@ LOSE_ITEM: "&cYou lose %item% &ax%amount%"
 HELP:
   PLAYER:
     - "&e/soul check <player> - Check soul of other player | &3Permission: soul.user"
+    - "&e/soul transfer <player> <amount> - Transfer soul to player | &3Permission: soul.transfer"
   ADMIN:
     - "&c/soul [add/remove/set] [soul/max] <player> <amount> - Change soul of other player |&3 Permission: soul.admin"
     - "&c/soul reload - Reload files |&e Permission: soul.admin"
