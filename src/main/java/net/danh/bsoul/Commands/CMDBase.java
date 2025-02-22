@@ -1,8 +1,8 @@
 package net.danh.bsoul.Commands;
 
+import net.danh.bsoul.bSoul;
 import org.bukkit.command.*;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,65 +12,25 @@ import java.util.Objects;
  */
 public abstract class CMDBase implements CommandExecutor, TabCompleter {
 
-    protected JavaPlugin core;
-
-    /**
-     * @param core Plugin main class
-     * @param name label
-     */
-    public CMDBase(JavaPlugin core, String name) {
-        this.core = core;
-        PluginCommand pluginCommand = core.getCommand(name);
+    public CMDBase(String name) {
+        PluginCommand pluginCommand = bSoul.getInstance().getCommand(name);
         Objects.requireNonNull(pluginCommand).setExecutor(this);
         pluginCommand.setTabCompleter(this);
     }
 
-    /**
-     * @param p    Player
-     * @param args args
-     */
-    public abstract void playerexecute(Player p, String[] args);
+    public abstract void execute(CommandSender c, String[] args);
 
-    /**
-     * @param c    ConsoleCommandSender
-     * @param args args
-     */
-    public abstract void consoleexecute(ConsoleCommandSender c, String[] args);
-
-    /**
-     * @param sender  Player/Console
-     * @param command cmd
-     * @param label   label
-     * @param args    args
-     * @return /label args ...
-     */
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            playerexecute((Player) sender, args);
-        }
-        if (sender instanceof ConsoleCommandSender) {
-            consoleexecute((ConsoleCommandSender) sender, args);
-        }
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        execute(sender, args);
         return true;
     }
 
-    /**
-     * @param sender sender
-     * @param cmd    cmd
-     * @param label  label
-     * @param args   args
-     * @return tab
-     */
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         return TabComplete(sender, args);
     }
 
-    /**
-     * @param sender sender
-     * @param args   args
-     * @return tab
-     */
     public abstract List<String> TabComplete(CommandSender sender, String[] args);
 }
+

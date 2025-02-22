@@ -39,10 +39,10 @@ public class PlayerDeath implements Listener {
             Data.removeSoul(p, soul_lose_amount);
         } else {
             if (killer != null) {
-                sendPlayerMessage(killer, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_WITHOUT_SOUL"))));
+                Chat.sendMessage(killer, Chat.normalColorize(Objects.requireNonNull(getlanguagefile().getString("KILL_PLAYER_WITHOUT_SOUL"))));
             }
         }
-        sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE")).replace("%amount%", String.valueOf(soul_lose_amount)).replace("%left%", String.valueOf(Data.getSoul(p))));
+        Chat.sendMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE")).replace("%amount%", String.valueOf(soul_lose_amount)).replace("%left%", String.valueOf(Data.getSoul(p))));
         if (getconfigfile().getBoolean("PVP.ENABLE")) {
             if (killer != null) {
                 int soul = getconfigfile().getInt("PVP.KILL_SOUL");
@@ -107,7 +107,7 @@ public class PlayerDeath implements Listener {
                         item = itemStack.getType().name();
                     }
                     int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
-                    sendPlayerMessage(p, Chat.colorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replace("%item%", item).replace("%amount%", String.valueOf(amount))));
+                    Chat.sendMessage(p, Chat.normalColorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replace("%item%", item).replace("%amount%", String.valueOf(amount))));
                     if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
                         World world = p.getLocation().getWorld();
                         if (world != null) {

@@ -60,9 +60,9 @@ public class Player {
      */
     public static void sendPlayerMessageType(org.bukkit.entity.Player p, String type, String msg) {
         if (type != null) {
-            p.spigot().sendMessage(ChatMessageType.valueOf(type), new TranslatableComponent(Chat.colorize(msg)));
+            p.spigot().sendMessage(ChatMessageType.valueOf(type), new TranslatableComponent(Chat.normalColorize(msg)));
         } else {
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TranslatableComponent(Chat.colorize(msg)));
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TranslatableComponent(Chat.normalColorize(msg)));
         }
     }
 }

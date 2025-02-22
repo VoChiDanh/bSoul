@@ -1,10 +1,7 @@
 package net.danh.bsoul.Manager;
 
 import com.cryptomorin.xseries.XEnchantment;
-import net.danh.bsoul.NMS.NMSAssistant;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,7 +22,7 @@ public class Items {
     public static List<String> Lore(List<String> input) {
         List<String> output = new ArrayList<>();
         for (String string : input) {
-            output.add(Chat.colorize(string));
+            output.add(Chat.normalColorize(string));
         }
         return output;
     }
@@ -46,7 +43,7 @@ public class Items {
         if (data >= 0) {
             itemStack = new ItemStack(material, amount);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            Objects.requireNonNull(itemMeta).setDisplayName(Chat.colorize(name));
+            Objects.requireNonNull(itemMeta).setDisplayName(Chat.normalColorize(name));
             if (lore != null) {
                 itemMeta.setLore(Lore(lore));
             }
@@ -68,7 +65,7 @@ public class Items {
         } else {
             itemStack = new ItemStack(material, amount, data);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            Objects.requireNonNull(itemMeta).setDisplayName(Chat.colorize(name));
+            Objects.requireNonNull(itemMeta).setDisplayName(Chat.normalColorize(name));
             if (lore != null) {
                 itemMeta.setLore(Lore(lore));
             }
@@ -107,11 +104,11 @@ public class Items {
         if (data == null) {
             itemStack = new ItemStack(material, amount);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            Objects.requireNonNull(itemMeta).setDisplayName(Chat.colorize(name));
+            Objects.requireNonNull(itemMeta).setDisplayName(Chat.normalColorize(name));
             if (lore != null) {
                 List<String> l = new ArrayList<>();
                 for (String lores : lore) {
-                    l.add(Chat.colorize(lores));
+                    l.add(Chat.normalColorize(lores));
                 }
                 itemMeta.setLore(Lore(l));
             }
@@ -133,11 +130,11 @@ public class Items {
         } else {
             itemStack = new ItemStack(material, amount, data);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            Objects.requireNonNull(itemMeta).setDisplayName(Chat.colorize(name));
+            Objects.requireNonNull(itemMeta).setDisplayName(Chat.normalColorize(name));
             if (lore != null) {
                 List<String> l = new ArrayList<>();
                 for (String lores : lore) {
-                    l.add(Chat.colorize(lores));
+                    l.add(Chat.normalColorize(lores));
                 }
                 itemMeta.setLore(l);
             }

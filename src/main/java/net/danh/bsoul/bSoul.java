@@ -37,7 +37,7 @@ public final class bSoul extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MobDeath(), this);
         getServer().getPluginManager().registerEvents(new JoinQuit(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
-        new Soul(this);
+        new Soul();
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholder().register();
         }

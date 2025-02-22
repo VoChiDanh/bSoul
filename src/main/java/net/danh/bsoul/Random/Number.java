@@ -1,6 +1,5 @@
 package net.danh.bsoul.Random;
 
-import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
