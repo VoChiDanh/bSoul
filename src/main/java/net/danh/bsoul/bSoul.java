@@ -12,6 +12,7 @@ import net.danh.bsoul.Hook.Placeholder;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Debug;
 import net.danh.bsoul.Manager.Resources;
+import net.danh.bsoul.Mythic.Register;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,14 +34,16 @@ public final class bSoul extends JavaPlugin {
     public void onEnable() {
         instance = this;
         new Metrics(this, 12918);
-        if (getServer().getPluginManager().getPlugin("bSoulMMAddon") == null) {
-            getServer().getPluginManager().registerEvents(new MobDeath(), this);
-        }
+        getServer().getPluginManager().registerEvents(new MobDeath(), this);
         getServer().getPluginManager().registerEvents(new JoinQuit(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
         new Soul(this);
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholder().register();
+        }
+        if (getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+            getServer().getPluginManager().registerEvents(new Register(), this);
         }
         Resources.createfiles();
         if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {

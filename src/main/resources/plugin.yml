@@ -6,6 +6,7 @@ authors: [ VoChiDanh ]
 description: SoulPoints for RPG Server
 softdepend:
   - PlaceholderAPI
+  - MythicMobs
 commands:
   soul:
     aliases:

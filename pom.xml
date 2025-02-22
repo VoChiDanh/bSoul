@@ -13,7 +13,7 @@
 	
 	<description>SoulPoints for RPG Server</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -78,7 +78,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.4.0</version>
+				<version>3.4.1</version>
 				<executions>
 					<execution>
 						<id>auto-clean</id>
@@ -100,8 +100,8 @@
 	
 	<repositories>
 		<repository>
-			<id>spigotmc-repo</id>
-			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+			<id>papermc-repo</id>
+			<url>https://repo.papermc.io/repository/maven-public/</url>
 		</repository>
 		<repository>
 			<id>sonatype</id>
@@ -120,13 +120,17 @@
 			<name>Maven Central</name>
 			<url>https://repo.maven.apache.org/maven2/</url>
 		</repository>
+		<repository>
+			<id>lumine-repo</id>
+			<url>https://mvn.lumine.io/repository/maven-public/</url>
+		</repository>
 	</repositories>
 	
 	<dependencies>
 		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.14.4-R0.1-SNAPSHOT</version>
+			<groupId>io.papermc.paper</groupId>
+			<artifactId>paper-api</artifactId>
+			<version>1.20.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -136,15 +140,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>io.lumine</groupId>
+			<artifactId>Mythic-Dist</artifactId>
+			<version>5.8.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>
-			<version>3.0.2</version>
+			<version>3.1.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.github.cryptomorin</groupId>
 			<artifactId>XSeries</artifactId>
-			<version>11.2.1</version>
+			<version>13.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>

@@ -3,6 +3,7 @@ package net.danh.bsoul.Cmd;
 import net.danh.bsoul.Commands.CMDBase;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Resources;
+import net.danh.bsoul.Random.Number;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +43,7 @@ public class Soul extends CMDBase {
                         return;
                     }
                     int soul = Data.getSoul(target);
-                    sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("CHECK_SOUL")).replace("%player%", target.getName()).replace("%soul%", String.format("%,d", soul)));
+                    sendPlayerMessage(p, Objects.requireNonNull(getlanguagefile().getString("CHECK_SOUL")).replace("%player%", target.getName()).replace("%soul%", new DecimalFormat("###,###.###").format(soul)));
                 }
             }
         }
@@ -66,7 +68,7 @@ public class Soul extends CMDBase {
                         return;
                     }
                     if (getInt(args[3]) > 0) {
-                        Integer soul = Integer.parseInt(args[3]);
+                        Integer soul = Number.getInt(args[3]);
                         if (args[0].equalsIgnoreCase("add")) {
                             if (args[1].equalsIgnoreCase("soul")) {
                                 if (Data.addSoul(target, soul)) {

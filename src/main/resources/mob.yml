@@ -7,12 +7,3 @@ VANILLA:
     MAX: 2
     MIN: 1
     CHANCE: 0.1
-MYTHICMOBS: #You need bSoulMMAddon for this!
-  DEFAULT:
-    MAX: 2
-    MIN: 1
-    CHANCE: 1.0
-  NAMEMOB:
-    MAX: 2
-    MIN: 1
-    CHANCE: 1.1

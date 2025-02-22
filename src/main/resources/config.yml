@@ -40,6 +40,4 @@ MOBS:
   ENABLE: true #Kill mob to get soul
   ANIMAL: false #true -> Enable kill animal can get soul
   MONSTER: true
-HOOK:
-  MYTHICMOBS: true #You need bSoulMMAddon for this!
 
