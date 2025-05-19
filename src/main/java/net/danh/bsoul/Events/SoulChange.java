@@ -1,8 +1,8 @@
 package net.danh.bsoul.Events;
 
 import net.danh.bsoul.CustomEvents.SoulItemChangeEvent;
+import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.Manager.Item;
-import net.danh.bsoul.Manager.Resources;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -22,11 +22,12 @@ public class SoulChange implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClick(PlayerDropItemEvent e) {
-        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+        FileLoader fileLoader = new FileLoader();
+        if (fileLoader.isSoulItemStatus()) {
             Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
             boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
             if (e.getItemDrop().getItemStack().getType() == material && Objects.requireNonNull(e.getItemDrop().getItemStack().getItemMeta()).isUnbreakable() == unbreak && e.getItemDrop().getItemStack().getAmount() == 1) {
-                if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                if (fileLoader.isSoulItemStatus()) {
                     e.setCancelled(true);
                 }
             }
@@ -35,16 +36,17 @@ public class SoulChange implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClick(InventoryClickEvent e) {
-        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+        FileLoader fileLoader = new FileLoader();
+        if (fileLoader.isSoulItemStatus()) {
             Material material = Material.getMaterial(Objects.requireNonNull(getconfigfile().getString("ITEM.SOUL.MATERIAL")));
             boolean unbreak = getconfigfile().getBoolean("ITEM.SOUL.UNBREAK");
             if (e.getWhoClicked() instanceof Player && e.getClickedInventory() != null) {
-                if (e.getSlot() == Resources.getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                if (e.getSlot() == fileLoader.getSoulSlot()) {
                     if (e.getCurrentItem() == null || e.getCurrentItem().getItemMeta() == null) {
                         return;
                     }
                     if (e.getCurrentItem().getType() == material && Objects.requireNonNull(e.getCurrentItem().getItemMeta()).isUnbreakable() == unbreak && e.getCurrentItem().getAmount() == 1) {
-                        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                        if (fileLoader.isSoulItemStatus()) {
                             e.setCancelled(true);
                             e.setResult(Event.Result.DENY);
                         }
@@ -59,7 +61,7 @@ public class SoulChange implements Listener {
                         return;
                     }
                     if (item.getType() == material && item.getItemMeta().isUnbreakable() == unbreak && item.getAmount() == 1) {
-                        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+                        if (fileLoader.isSoulItemStatus()) {
                             e.setCancelled(true);
                             e.setResult(Event.Result.DENY);
                         }
@@ -73,7 +75,8 @@ public class SoulChange implements Listener {
     public void onSoulChange(SoulItemChangeEvent e) {
         Player p = e.getPlayer();
         Integer count = e.getCount();
-        int slot = Resources.getconfigfile().getInt("ITEM.SOUL.SLOT");
+        FileLoader fileLoader = new FileLoader();
+        int slot = fileLoader.getSoulSlot();
         if (!e.isCancelled()) {
             p.getInventory().setItem(slot, Item.getSoulItems(count));
         }

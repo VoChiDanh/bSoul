@@ -17,7 +17,7 @@ public class Data {
         PlayerData playerStats = bSoul.db.getData(player.getName());
 
         if (playerStats == null) {
-            playerStats = new PlayerData(player.getName(), Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX"));
+            playerStats = new PlayerData(player.getName(), new FileLoader().getDefaultSoul(), new FileLoader().getDefaultSoulMax());
             bSoul.db.createTable(playerStats);
         }
 
@@ -39,8 +39,8 @@ public class Data {
     public static void setSoul(Player p, Integer amount) {
         SoulItemChangeEvent soulItemChangeEvent;
         if (getSoulData(p) == 0 && getMaxSoulData(p) == 0) {
-            soul.put(p.getName() + "_SOUL", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
-            soulItemChangeEvent = new SoulItemChangeEvent(p, Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL"), amount));
+            soul.put(p.getName() + "_SOUL", Math.max(new FileLoader().getDefaultSoul(), amount));
+            soulItemChangeEvent = new SoulItemChangeEvent(p, Math.max(new FileLoader().getDefaultSoul(), amount));
         } else {
             soul.put(p.getName() + "_SOUL", amount);
             soulItemChangeEvent = new SoulItemChangeEvent(p, amount);
@@ -49,7 +49,8 @@ public class Data {
     }
 
     public static boolean addSoul(Player p, Integer amount) {
-        if (!Resources.getconfigfile().getStringList("SETTINGS.EARN_BLACKLIST_WORLD").contains(p.getWorld().getName())) {
+        FileLoader fileLoader = new FileLoader();
+        if (!fileLoader.getEarnBlackListWorld().contains(p.getWorld().getName())) {
             int amounts = getSoul(p) + amount;
             if (amounts <= getSoulMax(p)) {
                 soul.replace(p.getName() + "_SOUL", amounts);
@@ -85,7 +86,7 @@ public class Data {
 
     public static void setSoulMax(Player p, Integer amount) {
         if (getSoulData(p) == 0 && getMaxSoulData(p) == 0) {
-            soul.put(p.getName() + "_SOUL_MAX", Math.max(Resources.getconfigfile().getInt("SETTINGS.DEFAULT_SOUL_MAX"), amount));
+            soul.put(p.getName() + "_SOUL_MAX", Math.max(new FileLoader().getDefaultSoulMax(), amount));
         } else {
             soul.put(p.getName() + "_SOUL_MAX", amount);
         }

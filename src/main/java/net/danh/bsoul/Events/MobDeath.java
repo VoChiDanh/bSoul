@@ -1,6 +1,7 @@
 package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.Manager.FileLoader;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
@@ -14,7 +15,8 @@ import java.util.Random;
 
 import static net.danh.bsoul.Manager.Debug.debug;
 import static net.danh.bsoul.Manager.Player.sendPlayerMessage;
-import static net.danh.bsoul.Manager.Resources.*;
+import static net.danh.bsoul.Manager.Resources.getlanguagefile;
+import static net.danh.bsoul.Manager.Resources.getmobfile;
 import static net.danh.bsoul.Random.Number.getRandomInt;
 
 public class MobDeath implements Listener {
@@ -24,23 +26,24 @@ public class MobDeath implements Listener {
         LivingEntity mob = e.getEntity();
         Player player = mob.getKiller();
         String vanillamobs = e.getEntityType().toString();
+        FileLoader fileLoader = new FileLoader();
         if (player == null) {
             return;
         }
-        if (!getconfigfile().getBoolean("MOBS.ENABLE")) {
+        if (!fileLoader.isMobKill()) {
             debug("MOBS.ENABLE doesn't enable");
             return;
         }
         if (mob instanceof Animals) {
             debug("Mobs is animals");
-            if (!getconfigfile().getBoolean("MOBS.ANIMAL")) {
+            if (!fileLoader.isAnimalKill()) {
                 debug("Mobs Animal doesn't enable");
                 return;
             }
         }
         if (mob instanceof Monster) {
             debug("Mobs is Monster");
-            if (!getconfigfile().getBoolean("MOBS.MONSTER")) {
+            if (!fileLoader.isMonsterKill()) {
                 debug("Mobs monster doesn't enable");
                 return;
             }

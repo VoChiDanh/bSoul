@@ -33,6 +33,8 @@ public class Resources {
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
+        FileLoader fileLoader = new FileLoader();
+        fileLoader.load();
     }
 
     public static FileConfiguration getconfigfile() {
@@ -51,6 +53,8 @@ public class Resources {
         language = YamlConfiguration.loadConfiguration(languageFile);
         config = YamlConfiguration.loadConfiguration(configFile);
         mob = YamlConfiguration.loadConfiguration(mobFile);
+        FileLoader fileLoader = new FileLoader();
+        fileLoader.load();
     }
 
     public static void saveconfig() {
@@ -58,6 +62,8 @@ public class Resources {
             config.save(configFile);
         } catch (IOException ignored) {
         }
+        FileLoader fileLoader = new FileLoader();
+        fileLoader.load();
     }
 
     public static void savelanguage() {

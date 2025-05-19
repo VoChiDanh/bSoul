@@ -11,6 +11,7 @@ import net.danh.bsoul.Events.SoulChange;
 import net.danh.bsoul.Hook.Placeholder;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.Debug;
+import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.Manager.Resources;
 import net.danh.bsoul.Mythic.Register;
 import org.bstats.bukkit.Metrics;
@@ -45,7 +46,8 @@ public final class bSoul extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new Register(), this);
         }
         Resources.createfiles();
-        if (Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
+        FileLoader fileLoader = new FileLoader();
+        if (fileLoader.isSoulItemStatus()) {
             getServer().getPluginManager().registerEvents(new SoulChange(), this);
         }
         db = new SQLite(bSoul.getInstance());
@@ -59,12 +61,12 @@ public final class bSoul extends JavaPlugin {
         Debug.update295();
         Debug.update299();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
-            if (Resources.getconfigfile().getBoolean("REHIBILITATE.ENABLE")) {
+            if (new FileLoader().isRehibilitate()) {
                 if (getSoul(p) < getSoulMax(p)) {
-                    Data.addSoul(p, Resources.getconfigfile().getInt("REHIBILITATE.SOUL"));
+                    Data.addSoul(p, new FileLoader().getSoul());
                 }
             }
-        }), Resources.getconfigfile().getLong("REHIBILITATE.TIME") * 20L, Resources.getconfigfile().getLong("REHIBILITATE.TIME") * 20L);
+        }), new FileLoader().getTime() * 20L, new FileLoader().getTime() * 20L);
     }
 
     @Override

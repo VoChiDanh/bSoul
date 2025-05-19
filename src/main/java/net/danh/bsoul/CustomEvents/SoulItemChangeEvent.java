@@ -1,6 +1,6 @@
 package net.danh.bsoul.CustomEvents;
 
-import net.danh.bsoul.Manager.Resources;
+import net.danh.bsoul.Manager.FileLoader;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -17,7 +17,7 @@ public class SoulItemChangeEvent extends Event implements Cancellable {
     public SoulItemChangeEvent(Player player, Integer count) {
         amount = count;
         p = player;
-        cancel = !Resources.getconfigfile().getBoolean("ITEM.SOUL.ENABLE");
+        cancel = !new FileLoader().isSoulItemStatus();
     }
 
     public static HandlerList getHandlerList() {

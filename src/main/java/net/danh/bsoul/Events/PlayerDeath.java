@@ -2,7 +2,7 @@ package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Chat;
 import net.danh.bsoul.Manager.Data;
-import net.danh.bsoul.Manager.Resources;
+import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,7 +21,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.danh.bsoul.Manager.Player.sendPlayerMessage;
-import static net.danh.bsoul.Manager.Resources.getconfigfile;
 import static net.danh.bsoul.Manager.Resources.getlanguagefile;
 
 public class PlayerDeath implements Listener {
@@ -30,9 +29,10 @@ public class PlayerDeath implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player killer = p.getKiller();
-        int soul_lose_amount = Math.max(1, getconfigfile().getInt("DEATH.SOUL_LOST"));
-        List<Integer> bls = Resources.getconfigfile().getIntegerList("SETTINGS.BLACKLIST_SLOTS");
-        if (getconfigfile().getBoolean("DEATH.SKIP_DEATH_SCREEN")) {
+        FileLoader fileLoader = new FileLoader();
+        int soul_lose_amount = Math.max(1, fileLoader.getSoulLost());
+        List<Integer> bls = fileLoader.getBlackListSlot();
+        if (fileLoader.isSkipDeathScreen()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(bSoul.getInstance(), () -> p.spigot().respawn(), 2);
         }
         if (Data.getSoul(p) > 0) {
@@ -43,10 +43,10 @@ public class PlayerDeath implements Listener {
             }
         }
         Chat.sendMessage(p, Objects.requireNonNull(getlanguagefile().getString("DEAD_MESSAGE")).replace("%amount%", String.valueOf(soul_lose_amount)).replace("%left%", String.valueOf(Data.getSoul(p))));
-        if (getconfigfile().getBoolean("PVP.ENABLE")) {
+        if (fileLoader.isPvp()) {
             if (killer != null) {
-                int soul = getconfigfile().getInt("PVP.KILL_SOUL");
-                double chance = getconfigfile().getDouble("PVP.CHANCE");
+                int soul = fileLoader.getKillSoul();
+                double chance = fileLoader.getChance();
                 double real_chance = new Random().nextInt(100);
                 if (chance >= real_chance) {
                     if (Data.getSoul(p) > 0) {
@@ -57,17 +57,17 @@ public class PlayerDeath implements Listener {
                 }
             }
         }
-        if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && !getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
-            int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
+        if (fileLoader.isLoseItemWhenDeath() && !fileLoader.isLoseAllItem()) {
+            int min = fileLoader.getMinSoulToLose();
             if (Data.getSoul(p) <= min) {
                 AtomicInteger atomicInteger = new AtomicInteger();
                 PlayerInventory playerInventory = p.getInventory();
                 for (int i = 0; i < playerInventory.getSize(); i++) {
-                    if (playerInventory.getItem(i) != null && playerInventory.getItem(i) == p.getInventory().getItemInMainHand() && getconfigfile().getBoolean("DEATH.PREVENT_MAIN_HAND"))
+                    if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
                         continue;
-                    if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
-                        if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                            if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                    if (!bls.isEmpty()) {
+                        if (fileLoader.isSoulItemStatus()) {
+                            if (i != fileLoader.getSoulSlot()) {
                                 if (playerInventory.getItem(i) != null) {
                                     if (!bls.contains(i)) {
                                         atomicInteger.set(i);
@@ -84,8 +84,8 @@ public class PlayerDeath implements Listener {
                             }
                         }
                     } else {
-                        if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                            if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                        if (fileLoader.isSoulItemStatus()) {
+                            if (i != fileLoader.getSoulSlot()) {
                                 if (playerInventory.getItem(i) != null) {
                                     atomicInteger.set(i);
                                     break;
@@ -110,7 +110,7 @@ public class PlayerDeath implements Listener {
                     }
                     int amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
                     Chat.sendMessage(p, Chat.normalColorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replace("%item%", item).replace("%amount%", String.valueOf(amount))));
-                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                    if (fileLoader.isDropItem()) {
                         World world = p.getLocation().getWorld();
                         if (world != null) {
                             world.dropItem(p.getLocation(), itemStack);
@@ -119,19 +119,19 @@ public class PlayerDeath implements Listener {
                     playerInventory.setItem(slot, null);
                 }
             }
-        } else if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
-            int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
+        } else if (fileLoader.isLoseItemWhenDeath() && fileLoader.isLoseAllItem()) {
+            int min = fileLoader.getMinSoulToLose();
             if (Data.getSoul(p) <= min) {
                 for (int i = 0; i < p.getInventory().getSize(); i++) {
-                    if (p.getInventory().getItem(i) != null && p.getInventory().getItem(i) == p.getInventory().getItemInMainHand() && getconfigfile().getBoolean("DEATH.PREVENT_MAIN_HAND"))
+                    if (p.getInventory().getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
                         continue;
-                    if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
-                        if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
+                    if (fileLoader.isSoulItemStatus()) {
+                        if (i != fileLoader.getSoulSlot()) {
                             ItemStack itemStack = p.getInventory().getItem(i);
-                            if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
+                            if (!bls.isEmpty()) {
                                 if (!bls.contains(i)) {
                                     if (itemStack != null && itemStack.getType() != Material.AIR) {
-                                        if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                        if (fileLoader.isDropItem()) {
                                             World world = p.getLocation().getWorld();
                                             if (world != null) {
                                                 world.dropItem(p.getLocation(), itemStack);
@@ -142,7 +142,7 @@ public class PlayerDeath implements Listener {
                                 }
                             } else {
                                 if (itemStack != null && itemStack.getType() != Material.AIR) {
-                                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                    if (fileLoader.isDropItem()) {
                                         World world = p.getLocation().getWorld();
                                         if (world != null) {
                                             world.dropItem(p.getLocation(), itemStack);
@@ -154,10 +154,10 @@ public class PlayerDeath implements Listener {
                         }
                     } else {
                         ItemStack itemStack = p.getInventory().getItem(i);
-                        if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
+                        if (!bls.isEmpty()) {
                             if (!bls.contains(i)) {
                                 if (itemStack != null && itemStack.getType() != Material.AIR) {
-                                    if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                    if (fileLoader.isDropItem()) {
                                         World world = p.getLocation().getWorld();
                                         if (world != null) {
                                             world.dropItem(p.getLocation(), itemStack);
@@ -168,7 +168,7 @@ public class PlayerDeath implements Listener {
                             }
                         } else {
                             if (itemStack != null && itemStack.getType() != Material.AIR) {
-                                if (getconfigfile().getBoolean("DEATH.DROP_ITEM")) {
+                                if (fileLoader.isDropItem()) {
                                     World world = p.getLocation().getWorld();
                                     if (world != null) {
                                         world.dropItem(p.getLocation(), itemStack);

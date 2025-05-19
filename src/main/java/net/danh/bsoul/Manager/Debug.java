@@ -42,7 +42,7 @@ public class Debug {
     }
 
     public static void debug(String message) {
-        if (Resources.getconfigfile().getBoolean("SETTINGS.DEBUG")) {
+        if (new FileLoader().isDebug()) {
             bSoul.getInstance().getLogger().warning(message);
         }
     }
