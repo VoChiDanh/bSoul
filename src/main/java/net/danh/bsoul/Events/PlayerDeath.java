@@ -63,6 +63,8 @@ public class PlayerDeath implements Listener {
                 AtomicInteger atomicInteger = new AtomicInteger();
                 PlayerInventory playerInventory = p.getInventory();
                 for (int i = 0; i < playerInventory.getSize(); i++) {
+                    if (playerInventory.getItem(i) != null && playerInventory.getItem(i) == p.getInventory().getItemInMainHand() && getconfigfile().getBoolean("DEATH.PREVENT_MAIN_HAND"))
+                        continue;
                     if (Resources.getconfigfile().contains("SETTINGS.BLACKLIST_SLOTS") && !bls.isEmpty()) {
                         if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                             if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
@@ -120,7 +122,9 @@ public class PlayerDeath implements Listener {
         } else if (getconfigfile().getBoolean("DEATH.LOSE_ITEM_WHEN_DEATH") && getconfigfile().getBoolean("DEATH.LOSE_ALL_ITEM")) {
             int min = getconfigfile().getInt("DEATH.MIN_SOUL_TO_LOSE");
             if (Data.getSoul(p) <= min) {
-                for (int i = 0; i <= p.getInventory().getSize(); i++) {
+                for (int i = 0; i < p.getInventory().getSize(); i++) {
+                    if (p.getInventory().getItem(i) != null && p.getInventory().getItem(i) == p.getInventory().getItemInMainHand() && getconfigfile().getBoolean("DEATH.PREVENT_MAIN_HAND"))
+                        continue;
                     if (getconfigfile().getBoolean("ITEM.SOUL.ENABLE")) {
                         if (i != getconfigfile().getInt("ITEM.SOUL.SLOT")) {
                             ItemStack itemStack = p.getInventory().getItem(i);

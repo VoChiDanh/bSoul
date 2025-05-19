@@ -20,6 +20,7 @@ DEATH:
   LOSE_ALL_ITEM: false
   MIN_SOUL_TO_LOSE: 3
   DROP_ITEM: true
+  PREVENT_MAIN_HAND: true
 PVP:
   ENABLE: true
   KILL_SOUL: 1

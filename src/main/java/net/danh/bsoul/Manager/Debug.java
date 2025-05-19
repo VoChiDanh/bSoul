@@ -32,6 +32,15 @@ public class Debug {
         }
     }
 
+
+    public static void update299() {
+        if (!Resources.getconfigfile().contains("DEATH.PREVENT_MAIN_HAND")) {
+            Resources.getconfigfile().set("DEATH.PREVENT_MAIN_HAND", true);
+            Resources.saveconfig();
+            bSoul.getInstance().getLogger().log(Level.WARNING, "Config has been updated for version 2.9.9!");
+        }
+    }
+
     public static void debug(String message) {
         if (Resources.getconfigfile().getBoolean("SETTINGS.DEBUG")) {
             bSoul.getInstance().getLogger().warning(message);
