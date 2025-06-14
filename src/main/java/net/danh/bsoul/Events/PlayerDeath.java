@@ -2,6 +2,7 @@ package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Chat;
 import net.danh.bsoul.Manager.Data;
+import net.danh.bsoul.Manager.Debug;
 import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
@@ -68,7 +69,8 @@ public class PlayerDeath implements Listener {
                 AtomicInteger atomicInteger = new AtomicInteger();
                 PlayerInventory playerInventory = p.getInventory();
                 int random = ThreadLocalRandom.current().nextInt(0, 100);
-                if (random <= 30 || (!fileLoader.isDropIncludeOffhand() && !fileLoader.isDropIncludeArmor())) {
+                Debug.debug("Random: " + random);
+                if (random <= 40 || (!fileLoader.isDropIncludeOffhand() && !fileLoader.isDropIncludeArmor())) {
                     for (int i = 0; i < playerInventory.getSize(); i++) {
                         if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
                             continue;
@@ -122,7 +124,8 @@ public class PlayerDeath implements Listener {
                     } else {
                         for (Integer integer : listSlot) drop(p, integer, null);
                     }
-                } else if (random <= 60 && random > 40 && fileLoader.isDropIncludeArmor()) {
+                }
+                if (random <= 60 && random > 40 && fileLoader.isDropIncludeArmor()) {
                     int slot = ThreadLocalRandom.current().nextInt(0, 4);
                     ItemStack itemStack = null;
                     EquipmentSlot equipmentSlot = null;
