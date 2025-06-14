@@ -101,4 +101,15 @@ public class Data {
             soul.replace(p.getName() + "_SOUL_MAX", getSoulMax(p) - amount);
         }
     }
+
+    public static int getLostAmount(Player p) {
+        FileLoader fileLoader = new FileLoader();
+        if (fileLoader.isMoreDrops()) {
+            int soul = getSoul(p);
+            if (Resources.getconfigfile().contains("DEATH.DROP.MORE_DROP.SOUL_" + soul)) {
+                return Resources.getconfigfile().getInt("DEATH.DROP.MORE_DROP.SOUL_" + soul);
+            } else return 1;
+        }
+        return 1;
+    }
 }

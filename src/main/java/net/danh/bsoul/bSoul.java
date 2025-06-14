@@ -47,6 +47,7 @@ public final class bSoul extends JavaPlugin {
         }
         Resources.createfiles();
         FileLoader fileLoader = new FileLoader();
+        fileLoader.load();
         if (fileLoader.isSoulItemStatus()) {
             getServer().getPluginManager().registerEvents(new SoulChange(), this);
         }
@@ -60,6 +61,7 @@ public final class bSoul extends JavaPlugin {
         Debug.update29();
         Debug.update295();
         Debug.update299();
+        Debug.update300();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Bukkit.getServer().getOnlinePlayers().forEach(p -> {
             if (new FileLoader().isRehibilitate()) {
                 if (getSoul(p) < getSoulMax(p)) {

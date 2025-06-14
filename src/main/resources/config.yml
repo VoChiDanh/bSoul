@@ -21,6 +21,16 @@ DEATH:
   MIN_SOUL_TO_LOSE: 3
   DROP_ITEM: true
   PREVENT_MAIN_HAND: true
+  DROP:
+    INCLUDE_ARMOR: true
+    INCLUDE_OFFHAND: true
+    #Lose all item must be false
+    #With SOUL_<AMOUNT OF SOUL> will lose number of items (instead of 1)
+    MORE_DROP:
+      ENABLE: true
+      SOUL_3: 3
+      SOUL_2: 5
+      SOUL_1: 7
 PVP:
   ENABLE: true
   KILL_SOUL: 1

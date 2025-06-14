@@ -22,6 +22,9 @@ public class FileLoader {
     private int minSoulToLose = 3;
     private boolean dropItem = true;
     private boolean preventMainHand = true;
+    private boolean dropIncludeArmor = true;
+    private boolean dropIncludeOffhand = true;
+    private boolean moreDrops = true;
     private boolean pvp = true;
     private int killSoul = 1;
     private double chance = 54.9;
@@ -50,6 +53,9 @@ public class FileLoader {
         minSoulToLose = config.getInt("DEATH.MIN_SOUL_TO_LOSE", 3);
         dropItem = config.getBoolean("DEATH.DROP_ITEM", true);
         preventMainHand = config.getBoolean("DEATH.PREVENT_MAIN_HAND", true);
+        dropIncludeArmor = config.getBoolean("DEATH.DROP.INCLUDE_ARMOR", true);
+        dropIncludeOffhand = config.getBoolean("DEATH.DROP.INCLUDE_OFFHAND", true);
+        moreDrops = config.getBoolean("DEATH.DROP.MORE_DROP.ENABLE", true);
         pvp = config.getBoolean("PVP.ENABLE", true);
         killSoul = config.getInt("PVP.KILL_SOUL", 1);
         chance = config.getDouble("PVP.CHANCE", 50);
@@ -155,5 +161,17 @@ public class FileLoader {
 
     public boolean isMonsterKill() {
         return monsterKill;
+    }
+
+    public boolean isDropIncludeArmor() {
+        return dropIncludeArmor;
+    }
+
+    public boolean isDropIncludeOffhand() {
+        return dropIncludeOffhand;
+    }
+
+    public boolean isMoreDrops() {
+        return moreDrops;
     }
 }

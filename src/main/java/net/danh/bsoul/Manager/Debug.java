@@ -41,6 +41,21 @@ public class Debug {
         }
     }
 
+    public static void update300() {
+        if (!Resources.getconfigfile().contains("DEATH.DROP.INCLUDE_ARMOR"))
+            Resources.getconfigfile().set("DEATH.DROP.INCLUDE_ARMOR", true);
+        if (!Resources.getconfigfile().contains("DEATH.DROP.INCLUDE_OFFHAND"))
+            Resources.getconfigfile().set("DEATH.DROP.INCLUDE_OFFHAND", true);
+        if (!Resources.getconfigfile().contains("DEATH.DROP.MORE_DROP.ENABLE")) {
+            Resources.getconfigfile().set("DEATH.DROP.MORE_DROP.ENABLE", true);
+            Resources.getconfigfile().set("DEATH.DROP.MORE_DROP.SOUL_3", 3);
+            Resources.getconfigfile().set("DEATH.DROP.MORE_DROP.SOUL_2", 5);
+            Resources.getconfigfile().set("DEATH.DROP.MORE_DROP.SOUL_1", 7);
+        }
+        Resources.saveconfig();
+        bSoul.getInstance().getLogger().log(Level.WARNING, "Config has been updated for version 3.0.0!");
+    }
+
     public static void debug(String message) {
         if (new FileLoader().isDebug()) {
             bSoul.getInstance().getLogger().warning(message);

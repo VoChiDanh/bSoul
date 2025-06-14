@@ -15,9 +15,10 @@ public class SoulItemChangeEvent extends Event implements Cancellable {
     private boolean cancel;
 
     public SoulItemChangeEvent(Player player, Integer count) {
+        FileLoader fileLoader = new FileLoader();
         amount = count;
         p = player;
-        cancel = !new FileLoader().isSoulItemStatus();
+        cancel = !fileLoader.isSoulItemStatus();
     }
 
     public static HandlerList getHandlerList() {
