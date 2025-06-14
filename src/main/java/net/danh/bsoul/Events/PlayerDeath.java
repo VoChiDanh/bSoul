@@ -70,7 +70,7 @@ public class PlayerDeath implements Listener {
                 PlayerInventory playerInventory = p.getInventory();
                 int random = ThreadLocalRandom.current().nextInt(0, 100);
                 Debug.debug("Random: " + random);
-                if (random <= 40 || (!fileLoader.isDropIncludeOffhand() && !fileLoader.isDropIncludeArmor())) {
+                if (!fileLoader.isDropIncludeOffhand() && !fileLoader.isDropIncludeArmor()) {
                     for (int i = 0; i < playerInventory.getSize(); i++) {
                         if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
                             continue;
