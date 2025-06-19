@@ -2,7 +2,6 @@ package net.danh.bsoul.Events;
 
 import net.danh.bsoul.Manager.Chat;
 import net.danh.bsoul.Manager.Data;
-import net.danh.bsoul.Manager.Debug;
 import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
@@ -69,61 +68,58 @@ public class PlayerDeath implements Listener {
                 AtomicInteger atomicInteger = new AtomicInteger();
                 PlayerInventory playerInventory = p.getInventory();
                 int random = ThreadLocalRandom.current().nextInt(0, 100);
-                Debug.debug("Random: " + random);
-                if (!fileLoader.isDropIncludeOffhand() && !fileLoader.isDropIncludeArmor()) {
-                    for (int i = 0; i < playerInventory.getSize(); i++) {
-                        if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
-                            continue;
-                        if (fileLoader.isSoulItemStatus()) {
-                            if (i != fileLoader.getSoulSlot()) {
-                                if (playerInventory.getItem(i) != null) {
-                                    if (!bls.isEmpty() && !bls.contains(i)) {
-                                        if (!fileLoader.isMoreDrops())
-                                            atomicInteger.set(i);
-                                        else {
-                                            listSlot.add(i);
-                                            if (listSlot.size() == lostAmount)
-                                                break;
-                                            else continue;
-                                        }
-                                    } else if (bls.isEmpty()) {
-                                        if (!fileLoader.isMoreDrops())
-                                            atomicInteger.set(i);
-                                        else {
-                                            listSlot.add(i);
-                                            if (listSlot.size() == lostAmount)
-                                                break;
-                                            else continue;
-                                        }
-                                    }
-                                    if (!fileLoader.isMoreDrops())
-                                        break;
-                                }
-                            }
-                        } else {
+                for (int i = 0; i < playerInventory.getSize(); i++) {
+                    if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
+                        continue;
+                    if (fileLoader.isSoulItemStatus()) {
+                        if (i != fileLoader.getSoulSlot()) {
                             if (playerInventory.getItem(i) != null) {
-                                if (!bls.contains(i)) {
-                                    if (!fileLoader.isMoreDrops()) {
+                                if (!bls.isEmpty() && !bls.contains(i)) {
+                                    if (!fileLoader.isMoreDrops())
                                         atomicInteger.set(i);
-                                        break;
-                                    } else {
+                                    else {
                                         listSlot.add(i);
                                         if (listSlot.size() == lostAmount)
                                             break;
+                                        else continue;
                                     }
+                                } else if (bls.isEmpty()) {
+                                    if (!fileLoader.isMoreDrops())
+                                        atomicInteger.set(i);
+                                    else {
+                                        listSlot.add(i);
+                                        if (listSlot.size() == lostAmount)
+                                            break;
+                                        else continue;
+                                    }
+                                }
+                                if (!fileLoader.isMoreDrops())
+                                    break;
+                            }
+                        }
+                    } else {
+                        if (playerInventory.getItem(i) != null) {
+                            if (!bls.contains(i)) {
+                                if (!fileLoader.isMoreDrops()) {
+                                    atomicInteger.set(i);
+                                    break;
+                                } else {
+                                    listSlot.add(i);
+                                    if (listSlot.size() == lostAmount)
+                                        break;
                                 }
                             }
                         }
                     }
-                    if (!fileLoader.isMoreDrops()) {
-                        int slot = atomicInteger.get();
-                        ItemStack itemStack = playerInventory.getItem(slot);
-                        if (itemStack != null) {
-                            drop(p, slot, null);
-                        }
-                    } else {
-                        for (Integer integer : listSlot) drop(p, integer, null);
+                }
+                if (!fileLoader.isMoreDrops()) {
+                    int slot = atomicInteger.get();
+                    ItemStack itemStack = playerInventory.getItem(slot);
+                    if (itemStack != null) {
+                        drop(p, slot, null);
                     }
+                } else {
+                    for (Integer integer : listSlot) drop(p, integer, null);
                 }
                 if (random <= 60 && random > 40 && fileLoader.isDropIncludeArmor()) {
                     int slot = ThreadLocalRandom.current().nextInt(0, 4);
