@@ -64,12 +64,10 @@ public class Data {
     }
 
     public static void removeSoul(Player p, Integer amount) {
-        int count = getSoul(p) - amount;
-        if (count >= 0) {
-            soul.replace(p.getName() + "_SOUL", count);
-            SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, count);
-            Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
-        }
+        int count = Math.max(getSoul(p) - amount, 0);
+        soul.replace(p.getName() + "_SOUL", count);
+        SoulItemChangeEvent soulItemChangeEvent = new SoulItemChangeEvent(p, count);
+        Bukkit.getServer().getPluginManager().callEvent(soulItemChangeEvent);
     }
 
     public static int getMaxSoulData(Player p) {
