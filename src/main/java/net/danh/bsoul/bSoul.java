@@ -19,6 +19,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 import static net.danh.bsoul.Manager.Data.getSoul;
 import static net.danh.bsoul.Manager.Data.getSoulMax;
 
@@ -26,6 +28,7 @@ public final class bSoul extends JavaPlugin {
 
     public static Database db;
     private static bSoul instance;
+    private boolean mmoitemsHook = false;
 
     public static bSoul getInstance() {
         return instance;
@@ -44,6 +47,10 @@ public final class bSoul extends JavaPlugin {
         }
         if (getServer().getPluginManager().getPlugin("MythicMobs") != null) {
             getServer().getPluginManager().registerEvents(new Register(), this);
+        }
+        if (getServer().getPluginManager().getPlugin("MMOItems") != null) {
+            mmoitemsHook = true;
+            getLogger().log(Level.INFO, "Hook with MMOItems");
         }
         Resources.createfiles();
         FileLoader fileLoader = new FileLoader();
@@ -78,5 +85,9 @@ public final class bSoul extends JavaPlugin {
         Resources.saveconfig();
         Resources.savelanguage();
         Resources.savemob();
+    }
+
+    public boolean isMmoitemsHook() {
+        return mmoitemsHook;
     }
 }

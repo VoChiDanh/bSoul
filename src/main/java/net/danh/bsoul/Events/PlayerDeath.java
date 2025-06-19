@@ -1,10 +1,12 @@
 package net.danh.bsoul.Events;
 
+import io.lumine.mythic.lib.api.item.NBTItem;
 import net.danh.bsoul.Manager.Chat;
 import net.danh.bsoul.Manager.Data;
 import net.danh.bsoul.Manager.FileLoader;
 import net.danh.bsoul.bSoul;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,32 +71,35 @@ public class PlayerDeath implements Listener {
                 PlayerInventory playerInventory = p.getInventory();
                 int random = ThreadLocalRandom.current().nextInt(0, 100);
                 for (int i = 0; i < playerInventory.getSize(); i++) {
-                    if (playerInventory.getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
-                        continue;
+                    ItemStack itemStack = playerInventory.getItem(i);
+                    if (itemStack != null) {
+                        if (i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand()) continue;
+                        if (bSoul.getInstance().isMmoitemsHook()) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null && nbtItem.hasType())
+                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") && nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING"))
+                                    continue;
+                        }
+                    }
                     if (fileLoader.isSoulItemStatus()) {
                         if (i != fileLoader.getSoulSlot()) {
                             if (playerInventory.getItem(i) != null) {
                                 if (!bls.isEmpty() && !bls.contains(i)) {
-                                    if (!fileLoader.isMoreDrops())
-                                        atomicInteger.set(i);
+                                    if (!fileLoader.isMoreDrops()) atomicInteger.set(i);
                                     else {
                                         listSlot.add(i);
-                                        if (listSlot.size() == lostAmount)
-                                            break;
+                                        if (listSlot.size() == lostAmount) break;
                                         else continue;
                                     }
                                 } else if (bls.isEmpty()) {
-                                    if (!fileLoader.isMoreDrops())
-                                        atomicInteger.set(i);
+                                    if (!fileLoader.isMoreDrops()) atomicInteger.set(i);
                                     else {
                                         listSlot.add(i);
-                                        if (listSlot.size() == lostAmount)
-                                            break;
+                                        if (listSlot.size() == lostAmount) break;
                                         else continue;
                                     }
                                 }
-                                if (!fileLoader.isMoreDrops())
-                                    break;
+                                if (!fileLoader.isMoreDrops()) break;
                             }
                         }
                     } else {
@@ -105,8 +110,7 @@ public class PlayerDeath implements Listener {
                                     break;
                                 } else {
                                     listSlot.add(i);
-                                    if (listSlot.size() == lostAmount)
-                                        break;
+                                    if (listSlot.size() == lostAmount) break;
                                 }
                             }
                         }
@@ -142,11 +146,33 @@ public class PlayerDeath implements Listener {
                             }
                         }
                     }
-                    if (itemStack != null)
-                        drop(p, 0, equipmentSlot);
+                    if (itemStack != null) {
+                        if (bSoul.getInstance().isMmoitemsHook()) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null && nbtItem.hasType()) {
+                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                    drop(p, 0, equipmentSlot);
+                                }
+                            } else {
+                                drop(p, 0, equipmentSlot);
+                            }
+                        } else drop(p, 0, equipmentSlot);
+                    }
                 } else if (random <= 90 && random > 60 && fileLoader.isDropIncludeOffhand()) {
                     if (!playerInventory.getItem(EquipmentSlot.OFF_HAND).isEmpty()) {
-                        drop(p, 0, EquipmentSlot.OFF_HAND);
+                        ItemStack itemStack = playerInventory.getItem(EquipmentSlot.OFF_HAND);
+                        if (itemStack != null && itemStack.getType() != Material.AIR) {
+                            if (bSoul.getInstance().isMmoitemsHook()) {
+                                NBTItem nbtItem = NBTItem.get(itemStack);
+                                if (nbtItem != null && nbtItem.hasType()) {
+                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                        drop(p, 0, EquipmentSlot.OFF_HAND);
+                                    }
+                                } else {
+                                    drop(p, 0, EquipmentSlot.OFF_HAND);
+                                }
+                            } else drop(p, 0, EquipmentSlot.OFF_HAND);
+                        }
                     }
                 }
             }
@@ -155,8 +181,16 @@ public class PlayerDeath implements Listener {
             PlayerInventory playerInventory = p.getInventory();
             if (Data.getSoul(p) <= min) {
                 for (int i = 0; i < p.getInventory().getSize(); i++) {
-                    if (p.getInventory().getItem(i) != null && i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand())
-                        continue;
+                    ItemStack itemStack = playerInventory.getItem(i);
+                    if (itemStack != null) {
+                        if (i == p.getInventory().getHeldItemSlot() && fileLoader.isPreventMainHand()) continue;
+                        if (bSoul.getInstance().isMmoitemsHook()) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null && nbtItem.hasType())
+                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") && nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING"))
+                                    continue;
+                        }
+                    }
                     if (fileLoader.isSoulItemStatus()) {
                         if (i != fileLoader.getSoulSlot()) {
                             if (playerInventory.getItem(i) != null) {
@@ -177,11 +211,36 @@ public class PlayerDeath implements Listener {
                 }
                 if (fileLoader.isDropIncludeArmor()) {
                     for (EquipmentSlot slot : EquipmentSlot.values()) {
-                        drop(p, 0, slot);
+                        ItemStack itemStack = playerInventory.getItem(slot);
+                        if (itemStack != null && itemStack.getType() != Material.AIR) {
+                            if (bSoul.getInstance().isMmoitemsHook()) {
+                                NBTItem nbtItem = NBTItem.get(itemStack);
+                                if (nbtItem != null && nbtItem.hasType()) {
+                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                        drop(p, 0, slot);
+                                    }
+                                } else {
+                                    drop(p, 0, slot);
+                                }
+                            } else drop(p, 0, slot);
+                        }
                     }
                 }
-                if (fileLoader.isDropIncludeOffhand())
-                    drop(p, 0, EquipmentSlot.OFF_HAND);
+                if (fileLoader.isDropIncludeOffhand()) {
+                    ItemStack itemStack = playerInventory.getItem(EquipmentSlot.OFF_HAND);
+                    if (itemStack != null && itemStack.getType() != Material.AIR) {
+                        if (bSoul.getInstance().isMmoitemsHook()) {
+                            NBTItem nbtItem = NBTItem.get(itemStack);
+                            if (nbtItem != null && nbtItem.hasType()) {
+                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                    drop(p, 0, EquipmentSlot.OFF_HAND);
+                                }
+                            } else {
+                                drop(p, 0, EquipmentSlot.OFF_HAND);
+                            }
+                        } else drop(p, 0, EquipmentSlot.OFF_HAND);
+                    }
+                }
             }
         }
     }
@@ -191,8 +250,7 @@ public class PlayerDeath implements Listener {
         FileLoader fileLoader = new FileLoader();
         String item;
         ItemStack itemStack;
-        if (equipmentSlot == null)
-            itemStack = playerInventory.getItem(slot);
+        if (equipmentSlot == null) itemStack = playerInventory.getItem(slot);
         else itemStack = playerInventory.getItem(equipmentSlot);
         if (itemStack != null) {
             if (itemStack.getItemMeta() != null && itemStack.getItemMeta().hasDisplayName()) {
@@ -201,8 +259,7 @@ public class PlayerDeath implements Listener {
                 item = itemStack.getType().name();
             }
             int amount;
-            if (equipmentSlot == null)
-                amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
+            if (equipmentSlot == null) amount = Objects.requireNonNull(playerInventory.getItem(slot)).getAmount();
             else amount = playerInventory.getItem(equipmentSlot).getAmount();
             Chat.sendMessage(p, Chat.normalColorize(Objects.requireNonNull(getlanguagefile().getString("LOSE_ITEM")).replace("%item%", item).replace("%amount%", String.valueOf(amount))));
             if (fileLoader.isDropItem()) {
@@ -211,8 +268,7 @@ public class PlayerDeath implements Listener {
                     world.dropItem(p.getLocation(), itemStack);
                 }
             }
-            if (equipmentSlot == null)
-                playerInventory.setItem(slot, null);
+            if (equipmentSlot == null) playerInventory.setItem(slot, null);
             else playerInventory.setItem(equipmentSlot, null);
         }
     }
