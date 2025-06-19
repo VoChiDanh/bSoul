@@ -35,8 +35,7 @@ public class FileLoader {
     private boolean animalKill = false;
     private boolean monsterKill = true;
 
-
-    public void load() {
+    public FileLoader() {
         FileConfiguration config = Resources.getconfigfile();
         blackListSlot = config.getIntegerList("SETTINGS.BLACKLIST_SLOTS");
         earnBlackListWorld = config.getStringList("SETTINGS.EARN_BLACKLIST_WORLD");

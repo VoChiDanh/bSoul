@@ -47,7 +47,6 @@ public final class bSoul extends JavaPlugin {
         }
         Resources.createfiles();
         FileLoader fileLoader = new FileLoader();
-        fileLoader.load();
         if (fileLoader.isSoulItemStatus()) {
             getServer().getPluginManager().registerEvents(new SoulChange(), this);
         }
