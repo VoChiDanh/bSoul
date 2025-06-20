@@ -77,7 +77,7 @@ public class PlayerDeath implements Listener {
                         if (bSoul.getInstance().isMmoitemsHook()) {
                             NBTItem nbtItem = NBTItem.get(itemStack);
                             if (nbtItem != null && nbtItem.hasType())
-                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") && nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING"))
+                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") && nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP"))
                                     continue;
                         }
                     }
@@ -150,7 +150,7 @@ public class PlayerDeath implements Listener {
                         if (bSoul.getInstance().isMmoitemsHook()) {
                             NBTItem nbtItem = NBTItem.get(itemStack);
                             if (nbtItem != null && nbtItem.hasType()) {
-                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP")) {
                                     drop(p, 0, equipmentSlot);
                                 }
                             } else {
@@ -165,7 +165,7 @@ public class PlayerDeath implements Listener {
                             if (bSoul.getInstance().isMmoitemsHook()) {
                                 NBTItem nbtItem = NBTItem.get(itemStack);
                                 if (nbtItem != null && nbtItem.hasType()) {
-                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP")) {
                                         drop(p, 0, EquipmentSlot.OFF_HAND);
                                     }
                                 } else {
@@ -187,7 +187,7 @@ public class PlayerDeath implements Listener {
                         if (bSoul.getInstance().isMmoitemsHook()) {
                             NBTItem nbtItem = NBTItem.get(itemStack);
                             if (nbtItem != null && nbtItem.hasType())
-                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") && nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING"))
+                                if (nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") && nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP"))
                                     continue;
                         }
                     }
@@ -216,7 +216,7 @@ public class PlayerDeath implements Listener {
                             if (bSoul.getInstance().isMmoitemsHook()) {
                                 NBTItem nbtItem = NBTItem.get(itemStack);
                                 if (nbtItem != null && nbtItem.hasType()) {
-                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                    if (!nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP")) {
                                         drop(p, 0, slot);
                                     }
                                 } else {
@@ -232,7 +232,7 @@ public class PlayerDeath implements Listener {
                         if (bSoul.getInstance().isMmoitemsHook()) {
                             NBTItem nbtItem = NBTItem.get(itemStack);
                             if (nbtItem != null && nbtItem.hasType()) {
-                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DROPING") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DROPING")) {
+                                if (!nbtItem.hasTag("MMOITEMS_DISABLE_DEATH_DROP") || !nbtItem.getBoolean("MMOITEMS_DISABLE_DEATH_DROP")) {
                                     drop(p, 0, EquipmentSlot.OFF_HAND);
                                 }
                             } else {
